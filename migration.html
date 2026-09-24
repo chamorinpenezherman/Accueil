@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Protection portail : redirige vers la connexion sans session -->
-<script src="auth.js"></script>
-<script>if(!window.PortailAuth||!PortailAuth.isLogged()){try{window.top.location.replace("index.html?next=migration")}catch(e){location.replace("index.html?next=migration")}}</script>
+<!-- Protection portail : autonome, ne dépend d'aucun autre fichier -->
+<script>(function(){try{if(window.top!==window.self)return;var s=JSON.parse(sessionStorage.getItem("cph-portail-session")||"null");if(s&&s.exp>Date.now())return;}catch(e){}location.replace("index.html?next=migration");})();</script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
