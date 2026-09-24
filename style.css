@@ -294,8 +294,10 @@ html.full, html.full body { height: 100%; }
 
 /* ---------- Boutons Explication / Ouvrir ---------- */
 .row-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.btn-explain { background: var(--white); color: var(--plum); border: 1.5px solid var(--plum); padding: 12.5px 20px; }
-.btn-explain:hover { background: #efe9f1; }
+.btn-explain { background: #e07f1f; color: var(--white); border: 1.5px solid #e07f1f; padding: 12.5px 20px; }
+.btn-explain:hover { background: #c96e14; border-color: #c96e14; }
+.btn-quiet { background: var(--white); color: var(--plum); border: 1.5px solid var(--plum); padding: 12.5px 20px; }
+.btn-quiet:hover { background: #efe9f1; }
 
 /* ---------- Fenêtre d'explication ---------- */
 .explain {
