@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
-  <script src="auth.js?v=7"></script>
-  <script src="apps.js?v=7"></script>
+  <link rel="stylesheet" href="style.css?v=8">
+  <script src="auth.js?v=8"></script>
+  <script src="apps.js?v=8"></script>
 </head>
 <body>
 
@@ -22,8 +22,8 @@
       <div class="logo-plate dark"><img src="penez-herman.jpg" alt="Penez Herman"></div>
     </div>
     <div style="position:relative;z-index:1">
-      <h1>Nos outils métier, réunis au même endroit</h1>
-      <p>Portail client, CRM commercial et suivi de la migration Divalto : un seul accès pour les trois applications.</p>
+      <h1>Fluidifier.<br>Gagner en rapidité.<br>Mieux informer.</h1>
+      <p>L'objectif de cette présentation : montrer comment trois outils simples peuvent fluidifier nos échanges, accélérer nos traitements et donner la bonne information, au bon moment, à nos clients comme à nos équipes.</p>
     </div>
     <div class="login-apps" id="loginApps"></div>
   </section>
@@ -47,6 +47,7 @@
       <div class="logo-plate"><img src="chamorin.jpg" alt="Chamorin"></div>
       <div class="logo-plate dark plate-ph"><img src="penez-herman.jpg" alt="Penez Herman"></div>
     </div>
+    <p class="clock" id="clock" aria-live="off"></p>
     <button class="btn btn-ghost" id="logoutBtn" type="button">Se déconnecter</button>
   </header>
 
@@ -210,6 +211,16 @@
       btn.disabled = false;
     }
   });
+
+  // Date et heure du jour dans le bandeau
+  function tick() {
+    const now = new Date();
+    const d = now.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const t = now.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+    $("clock").innerHTML = `<span>${d.charAt(0).toUpperCase() + d.slice(1)}</span><strong>${t}</strong>`;
+  }
+  tick();
+  setInterval(tick, 15000);
 
   $("logoutBtn").addEventListener("click", () => { PortailAuth.logout(); show(); });
 

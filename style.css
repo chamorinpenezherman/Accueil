@@ -86,8 +86,8 @@ a { color: inherit; }
   opacity: .22;
   transform: rotate(-12deg);
 }
-.login-side h1 { font-size: clamp(38px, 5.4vw, 68px); font-weight: 700; max-width: 12ch; }
-.login-side p { color: #ddd5df; max-width: 42ch; margin-top: 18px; font-size: 18px; }
+.login-side h1 { font-size: clamp(34px, 4.4vw, 60px); font-weight: 700; }
+.login-side p { color: #ddd5df; max-width: 46ch; margin-top: 18px; font-size: 18px; }
 .login-apps { display: flex; gap: 12px; position: relative; z-index: 1; }
 .login-apps span {
   width: 52px; height: 52px; border-radius: 14px;
@@ -133,6 +133,15 @@ a { color: inherit; }
 .topbar .logo-plate img { height: 30px; }
 .topbar .logo-plate.dark img { height: 26px; }
 .topbar .logo-plate { padding: 6px 10px; border-radius: 8px; }
+
+/* Date et heure au centre du bandeau (accueil) */
+#home .topbar { display: grid; grid-template-columns: 1fr auto 1fr; }
+#home .topbar .btn-ghost { justify-self: end; }
+.clock { display: flex; align-items: baseline; gap: 12px; font-size: 16px; color: #e5dde8; white-space: nowrap; }
+.clock strong { font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--white); font-variant-numeric: tabular-nums; }
+@media (max-width: 700px) {
+  .clock span { display: none; }
+}
 
 /* ---------- Accueil ---------- */
 .hero {
