@@ -245,35 +245,42 @@ html.full, html.full body { height: 100%; }
     linear-gradient(90deg, rgba(45,37,48,.78) 0%, rgba(45,37,48,.45) 32%, rgba(45,37,48,.08) 60%),
     linear-gradient(180deg, rgba(45,37,48,0) 55%, rgba(45,37,48,.35) 100%);
 }
-.apps-banner {
-  color: var(--white);
-  min-height: clamp(340px, 32vw, 500px);
-  display: flex; align-items: center;
-  padding: clamp(48px, 6vw, 80px) clamp(18px, 4vw, 48px) clamp(40px, 5vw, 64px);
+.apps-grid {
+  max-width: 1320px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(0, 2.3fr);
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  padding: clamp(64px, 8vw, 120px) clamp(18px, 4vw, 48px);
 }
-.apps-banner .section-inner { width: 100%; }
-.apps-banner h2 { color: var(--white); font-size: clamp(32px, 4vw, 52px); max-width: 14ch; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
-.apps-banner .intro { color: #f1ecf2; max-width: 40ch; text-shadow: 0 1px 12px rgba(0,0,0,.45); }
-.apps-body { padding: 0 clamp(18px, 4vw, 48px) clamp(64px, 8vw, 110px); }
-.apps-body .app-list {
+.apps-intro { position: sticky; top: calc(90px + env(safe-area-inset-top, 0px)); padding-top: 24px; }
+.apps-intro h2 { color: var(--white); font-size: clamp(32px, 3.6vw, 50px); text-shadow: 0 2px 20px rgba(0,0,0,.4); }
+.apps-intro .intro { color: #f1ecf2; max-width: 34ch; margin-top: 18px; text-shadow: 0 1px 12px rgba(0,0,0,.5); }
+.apps-section .app-list {
   margin-top: 0;
   background: rgba(255,255,255,.8);
   -webkit-backdrop-filter: blur(8px) saturate(1.1);
   backdrop-filter: blur(8px) saturate(1.1);
   border: 1px solid rgba(255,255,255,.6);
   border-radius: 24px;
-  padding: 6px clamp(18px, 3vw, 36px);
+  padding: 6px clamp(18px, 2.5vw, 32px);
   box-shadow: 0 24px 60px rgba(20,25,15,.3);
 }
-.apps-body .app-row:first-child { border-top: 0; }
-.apps-body .app-row:last-child { border-bottom: 0; }
-.apps-body .app-row { border-color: rgba(71,61,72,.14); }
+.apps-section .app-row:first-child { border-top: 0; }
+.apps-section .app-row:last-child { border-bottom: 0; }
+.apps-section .app-row { border-color: rgba(71,61,72,.14); }
+/* dans la colonne de droite, les boutons passent sous le texte pour lui laisser la largeur */
+.apps-section .app-row { grid-template-columns: 76px 1fr; gap: 8px 24px; align-items: start; padding: 30px 0; }
+.apps-section .app-icon { width: 76px; height: 76px; border-radius: 20px; }
+.apps-section .app-icon svg { width: 40px; height: 40px; }
+.apps-section .row-actions { grid-column: 2; justify-self: start; margin-top: 10px; }
 @media (max-width: 880px) {
   .apps-section { background-position: 32% 20%; }
   .apps-section::before {
     background: linear-gradient(180deg, rgba(45,37,48,.15) 0%, rgba(45,37,48,.6) 30%, rgba(45,37,48,.35) 100%);
   }
-  .apps-banner { min-height: 0; padding-top: 220px; align-items: flex-end; }
+  .apps-grid { grid-template-columns: 1fr; padding-top: 200px; }
+  .apps-intro { position: static; padding-top: 0; }
 }
 
 /* ---------- Boutons Explication / Ouvrir ---------- */
