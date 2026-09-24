@@ -15,7 +15,7 @@
 <body>
 
 <!-- ==================== CONNEXION ==================== -->
-<main id="login" class="login" hidden>
+<main id="login" class="login">
   <section class="login-side">
     <div class="logos">
       <div class="logo-plate"><img src="chamorin.jpg" alt="Chamorin, Déco Jardins & Terrasses"></div>
@@ -103,7 +103,22 @@
 </div>
 
 <script>
+  // Diagnostic : si un fichier du portail est introuvable, on l'affiche au lieu d'une page blanche
+  (function () {
+    var missing = [];
+    if (!window.PortailAuth) missing.push("auth.js");
+    if (!window.PORTAIL_APPS) missing.push("apps.js");
+    if (missing.length) {
+      var err = document.getElementById("error");
+      err.textContent = "Fichier introuvable sur le serveur : " + missing.join(", ") +
+        ". Vérifiez qu'il est bien à la racine du dépôt, au même niveau que index.html.";
+      document.getElementById("submitBtn").disabled = true;
+    }
+  })();
+</script>
+<script>
 (function () {
+  if (!window.PortailAuth || !window.PORTAIL_APPS) return;
   const apps = window.PORTAIL_APPS;
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
