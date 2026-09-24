@@ -236,7 +236,7 @@ html.full, html.full body { height: 100%; }
 .apps-section {
   position: relative;
   isolation: isolate;
-  background: #3b4a30 url("fond-jardin.jpg") 42% 30% / cover no-repeat;
+  background: #3b4a30 url("fond-jardin.jpg?v=5") 42% 30% / cover no-repeat;
 }
 .apps-section::before {
   /* voile : plus sombre à gauche sous le titre, léger ailleurs */
@@ -257,9 +257,9 @@ html.full, html.full body { height: 100%; }
 .apps-body { padding: 0 clamp(18px, 4vw, 48px) clamp(64px, 8vw, 110px); }
 .apps-body .app-list {
   margin-top: 0;
-  background: rgba(255,255,255,.74);
-  -webkit-backdrop-filter: blur(5px) saturate(1.1);
-  backdrop-filter: blur(5px) saturate(1.1);
+  background: rgba(255,255,255,.8);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
   border: 1px solid rgba(255,255,255,.6);
   border-radius: 24px;
   padding: 6px clamp(18px, 3vw, 36px);
