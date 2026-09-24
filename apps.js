@@ -6,7 +6,7 @@
 window.PORTAIL_APPS = [
   {
     id: "portail-client",
-    file: "apps/portail-client.html",
+    file: "portail-client.html",
     name: "Portail client",
     audience: "Pour les clients enseignes",
     summary: "L'espace où un magasin suit ses commandes en cours, consulte son historique 2025–2026, suit les ventes de nos produits et ouvre une demande SAV.",
@@ -16,7 +16,7 @@ window.PORTAIL_APPS = [
   },
   {
     id: "crm",
-    file: "apps/crm.html",
+    file: "crm.html",
     name: "CRM commercial",
     audience: "Pour l'équipe commerciale",
     summary: "Un exemple de CRM pour préparer et tracer les visites : agenda, comptes rendus, prises de commande, opportunités et fiche complète de chaque client.",
@@ -26,7 +26,7 @@ window.PORTAIL_APPS = [
   },
   {
     id: "migration",
-    file: "apps/migration.html",
+    file: "migration.html",
     name: "Suivi de la migration Divalto",
     audience: "Pour les équipes internes",
     summary: "Le suivi des ateliers de migration service par service : chronologie des sessions, participants, fiches de tests et points bloquants à lever.",
