@@ -109,7 +109,7 @@
   const apps = window.PORTAIL_APPS;
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const openUrl = a => "app.html?app=" + encodeURIComponent(a.id);
+  const openUrl = a => "app.html?app=" + encodeURIComponent(a.id) + "&v=7";
 
   // Icônes sur l'écran de connexion
   $("loginApps").innerHTML = apps.map(a =>
