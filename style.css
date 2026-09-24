@@ -102,6 +102,14 @@ a { color: inherit; }
   background: var(--white);
 }
 .login-form { width: 100%; max-width: 360px; }
+.login-pitch { position: relative; z-index: 1; margin: auto 0; }
+.brand-avatars { display: flex; gap: 28px; margin-bottom: 36px; }
+.brand-avatars figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.brand-avatars img {
+  width: 120px; height: 120px; border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--white), 0 0 0 5px var(--line), 0 10px 24px rgba(45,37,48,.18);
+}
+.brand-avatars figcaption { font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--ink); }
 .login-form h2 { font-size: 30px; font-weight: 700; }
 .login-form .hint { color: var(--ink-soft); margin: 8px 0 28px; }
 .login-form label { display: block; font-weight: 600; margin-bottom: 8px; }

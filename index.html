@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
   <script src="auth.js?v=8"></script>
   <script src="apps.js?v=8"></script>
 </head>
@@ -17,11 +17,7 @@
 <!-- ==================== CONNEXION ==================== -->
 <main id="login" class="login">
   <section class="login-side">
-    <div class="logos">
-      <div class="logo-plate"><img src="chamorin.jpg" alt="Chamorin, Déco Jardins & Terrasses"></div>
-      <div class="logo-plate dark"><img src="penez-herman.jpg" alt="Penez Herman"></div>
-    </div>
-    <div style="position:relative;z-index:1">
+    <div class="login-pitch">
       <h1>Fluidifier.<br>Gagner en rapidité.<br>Mieux informer.</h1>
       <p>L'objectif de cette présentation : montrer comment trois outils simples peuvent fluidifier nos échanges, accélérer nos traitements et donner la bonne information, au bon moment, à nos clients comme à nos équipes.</p>
     </div>
@@ -30,6 +26,16 @@
 
   <section class="login-form-wrap">
     <form class="login-form" id="loginForm" novalidate>
+      <div class="brand-avatars">
+        <figure>
+          <img src="avatar-chamorin.png?v=10" alt="" width="120" height="120">
+          <figcaption>Chamorin</figcaption>
+        </figure>
+        <figure>
+          <img src="avatar-penez-herman.png?v=10" alt="" width="120" height="120">
+          <figcaption>Penez Herman</figcaption>
+        </figure>
+      </div>
       <h2>Connexion</h2>
       <p class="hint">Saisissez le code d'accès fourni par l'équipe Data.</p>
       <label for="code">Code d'accès</label>
