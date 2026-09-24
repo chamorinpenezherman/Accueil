@@ -71,6 +71,11 @@
     </section>
   </main>
 
+  <dialog class="explain" id="explainDialog" aria-labelledby="explainTitle">
+    <button class="ex-x" type="button" data-close aria-label="Fermer">×</button>
+    <div id="explainBody"></div>
+  </dialog>
+
   <footer class="footer">
     <div class="footer-inner">
       <div class="logos">
@@ -125,8 +130,48 @@
         <p class="sum">${esc(a.summary)}</p>
         <ul class="chips">${a.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
       </div>
-      <a class="btn btn-open" href="${openUrl(a)}">Ouvrir</a>
+      <div class="row-actions">
+        <button class="btn btn-explain" type="button" data-explain="${a.id}">Explication</button>
+        <a class="btn btn-open" href="${openUrl(a)}">Ouvrir</a>
+      </div>
     </article>`).join("");
+
+  // Fenêtre d'explication
+  const dlg = $("explainDialog");
+  function openExplain(id) {
+    const a = apps.find(x => x.id === id);
+    if (!a || !a.note) return;
+    const n = a.note;
+    $("explainBody").innerHTML = `
+      <header class="ex-head" style="background:${a.color}">
+        <div class="ex-icon">${a.icon}</div>
+        <div>
+          <p class="ex-name">${esc(a.name)}</p>
+          <h2 id="explainTitle">${esc(n.pitch)}</h2>
+        </div>
+      </header>
+      <div class="ex-content">
+        <p class="ex-idea">${esc(n.idea)}</p>
+        ${n.blocks.map(b => `
+          <section class="ex-block">
+            <h3>${esc(b.title)}</h3>
+            <ul>${b.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+          </section>`).join("")}
+      </div>
+      <footer class="ex-foot">
+        <button class="btn btn-explain" type="button" data-close>Fermer</button>
+        <a class="btn btn-open" href="${openUrl(a)}">Ouvrir ${esc(a.name)}</a>
+      </footer>`;
+    dlg.showModal();
+    dlg.querySelector(".ex-content").scrollTop = 0;
+  }
+  $("appList").addEventListener("click", e => {
+    const b = e.target.closest("[data-explain]");
+    if (b) openExplain(b.dataset.explain);
+  });
+  dlg.addEventListener("click", e => {
+    if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+  });
 
   function show() {
     const logged = PortailAuth.isLogged();
