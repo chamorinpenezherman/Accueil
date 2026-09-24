@@ -46,6 +46,15 @@ a { color: inherit; }
 .logo-plate.dark img { height: 34px; }
 .logos .plus { color: currentColor; opacity: .5; font-family: var(--display); font-size: 22px; }
 
+/* Logos ronds (bandeau, pied de page) */
+.mini-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--white); font-family: var(--display); font-weight: 700; font-size: 16px; white-space: nowrap; }
+.mini-brand img { width: 46px; height: 46px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.85); }
+.logos .mini-brand + .mini-brand { margin-left: 10px; }
+@media (max-width: 700px) {
+  .mini-brand span { display: none; }
+  .logos .mini-brand + .mini-brand { margin-left: 0; }
+}
+
 /* ---------- Boutons ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -246,7 +255,7 @@ html.full, html.full body { height: 100%; }
 .viewer-nav a[aria-current="page"] { background: var(--white); color: var(--plum-deep); }
 .viewer iframe { flex: 1; width: 100%; border: 0; background: var(--white); }
 .back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; }
-.back img { height: 26px; }
+.back .mini-brand img { width: 42px; height: 42px; }
 
 /* ---------- Section applications avec photo de fond ---------- */
 /* La photo couvre toute la section, du titre jusqu'en bas de la liste */
