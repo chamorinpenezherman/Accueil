@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" class="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Portail applicatif — Chamorin & Penez Herman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/auth.js"></script>
+  <script src="assets/apps.js"></script>
+  <script>
+    // Pas de session : retour à l'écran de connexion, puis retour ici après connexion
+    (function () {
+      const id = new URLSearchParams(location.search).get("app") || "";
+      if (!PortailAuth.isLogged()) location.replace("index.html?next=" + encodeURIComponent(id));
+    })();
+  </script>
+</head>
+<body>
+  <div class="viewer">
+    <header class="topbar">
+      <a class="back" href="index.html" title="Retour à l'accueil">
+        <span class="logo-plate"><img src="assets/chamorin.jpg" alt="Accueil du portail"></span>
+      </a>
+      <nav class="viewer-nav" id="nav" aria-label="Applications"></nav>
+      <button class="btn btn-ghost" id="logoutBtn" type="button">Se déconnecter</button>
+    </header>
+    <iframe id="frame" title="Application"></iframe>
+  </div>
+
+<script>
+(function () {
+  const apps = window.PORTAIL_APPS;
+  const id = new URLSearchParams(location.search).get("app");
+  const current = apps.find(a => a.id === id);
+  if (!current) { location.replace("index.html"); return; }
+
+  document.title = current.name + " — Portail Chamorin & Penez Herman";
+  document.getElementById("frame").src = current.file;
+  document.getElementById("frame").title = current.name;
+
+  document.getElementById("nav").innerHTML = apps.map(a => `
+    <a href="app.html?app=${encodeURIComponent(a.id)}" ${a.id === current.id ? 'aria-current="page"' : ""} title="${a.name}">
+      ${a.icon}<span>${a.name}</span>
+    </a>`).join("");
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    PortailAuth.logout();
+    location.href = "index.html";
+  });
+})();
+</script>
+</body>
+</html>

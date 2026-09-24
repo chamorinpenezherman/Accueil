@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<!-- Protection portail : redirige vers la connexion sans session -->
+<script src="../assets/auth.js"></script>
+<script>if(!window.PortailAuth||!PortailAuth.isLogged()){try{window.top.location.replace("../index.html?next=portail-client")}catch(e){location.replace("../index.html?next=portail-client")}}</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chamorin — Espace Client · Leroy Merlin Perpignan</title>
+<style>
+  :root{
+    --charcoal:#1B1B1B;
+    --charcoal-soft:#4A4A4A;
+    --green:#6DAF3C;
+    --green-light:#EDF5E4;
+    --orange:#F28C1E;
+    --orange-light:#FCEBD4;
+    --red:#C0392B;
+    --red-light:#FBE7E4;
+    --bg:#F7F6F3;
+    --card:#FFFFFF;
+    --text:#232323;
+    --text-soft:#6B6B6B;
+    --border:#E7E4DE;
+    --radius:14px;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{height:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Calibri,"Segoe UI",Optima,Candara,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10141C; --card:#1A2030; --text:#EDEFF3; --text-soft:#9AA4B2; --border:#2A3242;
+      --green-light:#1D2A18; --orange-light:#2E260F; --red-light:#301414;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10141C; --card:#1A2030; --text:#EDEFF3; --text-soft:#9AA4B2; --border:#2A3242;
+    --green-light:#1D2A18; --orange-light:#2E260F; --red-light:#301414;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;}
+
+  .app{display:flex;min-height:100%;}
+
+  .sidebar{
+    width:236px;flex-shrink:0;background:var(--charcoal);color:#fff;
+    display:flex;flex-direction:column;padding:22px 16px calc(20px + env(safe-area-inset-bottom,0px));
+    position:sticky;top:0;align-self:flex-start;height:100vh;
+  }
+  .brand{display:flex;align-items:center;gap:10px;padding:0 6px 22px;border-bottom:1px solid rgba(255,255,255,.15);margin-bottom:18px;}
+  .brand .mark{width:38px;height:38px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand .mark svg{width:24px;height:24px;}
+  .brand .name{font-size:19px;font-weight:700;color:#fff;}
+  .brand .sub{font-size:10.5px;color:var(--orange);margin-top:2px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+
+  nav.side-nav{display:flex;flex-direction:column;gap:2px;flex:1;}
+  .nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;color:#D9DBDF;font-size:14.5px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;}
+  .nav-item svg{width:18px;height:18px;flex-shrink:0;}
+  .nav-item:hover{background:rgba(255,255,255,.08);color:#fff;}
+  .nav-item.active{background:var(--orange);color:#fff;font-weight:600;}
+
+  .sidebar-foot{border-top:1px solid rgba(255,255,255,.15);padding-top:14px;margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+  .icon-row{display:flex;gap:8px;}
+  .icon-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:transparent;color:#D9DBDF;font-weight:600;font-size:12.3px;padding:9px 8px;border-radius:10px;border:1px solid rgba(255,255,255,.22);cursor:pointer;}
+  .icon-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+
+  .invite-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:10px;font-size:12.8px;}
+  .invite-row .av{width:26px;height:26px;border-radius:50%;background:var(--charcoal-soft);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;flex-shrink:0;}
+  .invite-row .info{flex:1;min-width:0;}
+  .invite-row .info .em{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .invite-row .info .rl{color:var(--text-soft);font-size:11.6px;}
+  .invite-row .st{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+  .invite-row .st.actif{background:var(--green-light);color:var(--green);}
+  .invite-row .st.attente{background:var(--orange-light);color:var(--orange);}
+  .sav-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--orange);color:#fff;font-weight:700;font-size:14px;padding:11px 10px;border-radius:10px;border:none;cursor:pointer;}
+  .sav-btn:hover{filter:brightness(1.06);}
+  .dl-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;color:#D9DBDF;font-weight:600;font-size:12.8px;padding:9px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.25);cursor:pointer;}
+  .dl-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+  .dl-btn svg{width:15px;height:15px;}
+
+  main{flex:1;min-width:0;padding:26px 32px 56px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:16px;flex-wrap:wrap;}
+  .topbar h1{font-size:22px;margin:0;}
+  .topbar .client-chip{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);padding:8px 14px;border-radius:999px;font-size:13.5px;color:var(--text-soft);}
+  .topbar .client-chip b{color:var(--text);}
+  .avatar{width:28px;height:28px;border-radius:50%;background:var(--charcoal-soft);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 18px 16px;}
+  .kpi .icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+  .kpi .icon svg{width:18px;height:18px;}
+  .kpi .value{font-size:25px;font-weight:700;line-height:1.1;}
+  .kpi .label{font-size:12.3px;color:var(--text-soft);margin-top:4px;}
+  .kpi .delta{font-size:11.5px;font-weight:600;margin-top:8px;display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;}
+  .delta.up{background:var(--green-light);color:var(--green);}
+  .delta.warn{background:var(--orange-light);color:var(--orange);}
+  .delta.down{background:var(--red-light);color:var(--red);}
+
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:20px;}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px;flex-wrap:wrap;}
+  .panel-head h2{font-size:16.5px;margin:0;}
+  .panel-head .hint{font-size:12.5px;color:var(--text-soft);}
+  .grid-2{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;}
+
+  table{width:100%;border-collapse:collapse;font-size:13.6px;}
+  th{text-align:left;color:var(--text-soft);font-weight:600;font-size:11.6px;text-transform:uppercase;letter-spacing:.03em;padding:8px 10px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;}
+  th.num,td.num{text-align:right;}
+  th:hover{color:var(--text);}
+  th .arrow{font-size:10px;margin-left:3px;opacity:.6;}
+  td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr.total-row td{font-weight:700;border-top:2px solid var(--charcoal);background:var(--bg);}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11.8px;font-weight:600;white-space:nowrap;}
+  .badge.prep{background:var(--orange-light);color:var(--orange);}
+  .badge.livree{background:var(--green-light);color:var(--green);}
+  .badge.attente{background:var(--red-light);color:var(--red);}
+  .badge.new{background:var(--green-light);color:var(--green);}
+  .badge.exp{background:#EDEDED;color:var(--charcoal-soft);}
+
+  /* active order cards (dashboard) */
+  .active-order-card{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .active-order-card:last-child{margin-bottom:0;}
+  .aoc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px;flex-wrap:wrap;}
+  .aoc-head .ref{font-weight:700;font-size:14.5px;}
+  .aoc-amount{font-weight:700;font-size:15px;}
+  .aoc-meta{font-size:12.2px;color:var(--text-soft);margin-bottom:12px;}
+  .chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .article-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:9px;font-size:12px;background:var(--bg);border:1px solid var(--border);max-width:100%;}
+  .article-chip .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .article-chip .dot.ok{background:var(--green);}
+  .article-chip .dot.rupture{background:var(--red);}
+  .article-chip .dot.partiel{background:var(--red);}
+  .article-chip .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px;}
+  .article-chip .qt{color:var(--text-soft);white-space:nowrap;}
+  .article-chip.is-rupture{background:var(--red-light);border-color:#F0C7C0;}
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+  .muted{color:var(--text-soft);}
+  .link-btn{background:none;border:none;color:var(--orange);font-weight:600;font-size:13px;cursor:pointer;padding:4px 0;}
+  .link-btn:hover{text-decoration:underline;}
+  .searchbox{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:7px 12px;font-size:13px;color:var(--text-soft);width:240px;}
+  .searchbox input{border:none;background:transparent;outline:none;font-family:inherit;font-size:13px;color:var(--text);width:100%;}
+  .table-wrap{max-height:480px;overflow:auto;}
+  .evol-pos{color:var(--green);font-weight:700;}
+  .evol-neg{color:var(--red);font-weight:700;}
+
+  /* custom bar chart */
+  .barchart{display:flex;flex-direction:column;gap:14px;}
+  .barrow .barrow-head{display:flex;justify-content:space-between;font-size:12.6px;margin-bottom:5px;gap:10px;}
+  .barrow .barrow-head .name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .barrow .barrow-head .vals{color:var(--text-soft);white-space:nowrap;}
+  .bartrack{position:relative;height:9px;background:var(--bg);border-radius:5px;overflow:hidden;}
+  .bartrack .b25{position:absolute;top:0;left:0;height:100%;background:#D8D5CE;border-radius:5px;}
+  .bartrack .b26{position:absolute;top:0;left:0;height:100%;background:var(--orange);border-radius:5px;transition:width .6s ease;}
+  .legend-mini{display:flex;gap:16px;font-size:12px;color:var(--text-soft);margin-bottom:14px;}
+  .legend-mini span{display:inline-flex;align-items:center;gap:6px;}
+  .legend-mini i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+
+  .stat-compare{display:flex;align-items:center;gap:22px;margin-bottom:18px;flex-wrap:wrap;}
+  .stat-block{text-align:left;}
+  .stat-block .n{font-size:27px;font-weight:700;}
+  .stat-block .l{font-size:12.3px;color:var(--text-soft);}
+  .stat-arrow{display:flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green);font-weight:700;font-size:14px;padding:6px 14px;border-radius:999px;}
+
+  .rupture-list{display:flex;flex-direction:column;gap:10px;}
+  .rupture{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--red-light);border:1px solid #F0C7C0;}
+  .rupture .swatch{width:8px;align-self:stretch;border-radius:6px;background:var(--red);}
+  .rupture .info b{display:block;font-size:13.6px;}
+  .rupture .info span{font-size:12px;color:var(--text-soft);}
+  .rupture .when{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--red);white-space:nowrap;}
+
+  /* order tracker */
+  .tracker-card{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .tracker-card:last-child{margin-bottom:0;}
+  .tracker-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .tracker-top .ref{font-weight:700;font-size:14.5px;}
+  .tracker-top .meta{font-size:12.3px;color:var(--text-soft);}
+  .tracker-eta{font-size:12.6px;font-weight:700;color:var(--orange);background:var(--orange-light);padding:4px 11px;border-radius:999px;}
+  .stepper{display:flex;align-items:center;}
+  .step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;}
+  .step .circle{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--bg);border:2px solid var(--border);color:var(--text-soft);z-index:1;}
+  .step .lbl{font-size:11px;color:var(--text-soft);margin-top:7px;text-align:center;max-width:90px;}
+  .step .line{position:absolute;top:13px;right:50%;width:100%;height:2px;background:var(--border);z-index:0;}
+  .step:first-child .line{display:none;}
+  .step.done .circle{background:var(--green);border-color:var(--green);color:#fff;}
+  .step.done .line{background:var(--green);}
+  .step.current .line{background:var(--green);}
+  .step.done .lbl{color:var(--text);font-weight:600;}
+  .step.current .circle{background:var(--orange);border-color:var(--orange);color:#fff;}
+  .step.current .lbl{color:var(--text);font-weight:700;}
+  .step.blocked .circle{background:var(--red);border-color:var(--red);color:#fff;}
+  .step.blocked .lbl{color:var(--red);font-weight:700;}
+  .step.blocked .line{background:var(--green);}
+  .tracker-alert{display:flex;align-items:flex-start;gap:9px;background:var(--red-light);border:1px solid #F0C7C0;border-radius:9px;padding:10px 13px;margin-top:14px;font-size:12.6px;color:var(--red);}
+  .tracker-alert svg{flex-shrink:0;margin-top:1px;}
+
+  .section{display:none;}
+  .section.active{display:block;}
+
+  .overlay{position:fixed;inset:0;background:rgba(15,20,30,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:50;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card);border-radius:16px;width:100%;max-width:520px;max-height:88vh;overflow:auto;padding:26px 26px 22px;}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .modal-head h3{margin:0;font-size:18px;}
+  .modal-head button{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-soft);line-height:1;}
+  .modal p.sub{color:var(--text-soft);font-size:13px;margin:0 0 18px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.8px;font-weight:600;margin-bottom:6px;}
+  .field select,.field textarea,.field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-family:inherit;font-size:13.8px;background:var(--bg);color:var(--text);}
+  .field textarea{resize:vertical;min-height:80px;}
+  .upload{border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;font-size:12.8px;color:var(--text-soft);cursor:pointer;}
+  .upload:hover{border-color:var(--orange);color:var(--orange);}
+  .modal-actions{display:flex;gap:10px;margin-top:18px;}
+  .btn{padding:11px 16px;border-radius:9px;border:none;font-weight:700;font-size:13.8px;cursor:pointer;}
+  .btn.primary{background:var(--orange);color:#fff;flex:1;}
+  .btn.primary:hover{filter:brightness(1.06);}
+  .btn.ghost{background:transparent;color:var(--text-soft);border:1px solid var(--border);}
+
+  .toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,140%);background:var(--charcoal);color:#fff;padding:13px 20px;border-radius:10px;font-size:13.5px;display:flex;align-items:center;gap:10px;transition:transform .35s ease;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.2);}
+  .toast.show{transform:translate(-50%,0);}
+
+  @media (max-width: 880px){
+    .sidebar{position:fixed;left:-260px;z-index:40;transition:left .25s ease;box-shadow:0 0 40px rgba(0,0,0,.3);}
+    .sidebar.open{left:0;}
+    main{padding:18px 16px 60px;}
+    .kpi-grid{grid-template-columns:1fr 1fr;}
+    .grid-2{grid-template-columns:1fr;}
+    .menu-toggle{display:flex !important;}
+    .searchbox{width:100%;}
+  }
+  .menu-toggle{display:none;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9px;background:var(--card);border:1px solid var(--border);cursor:pointer;}
+
+  @media print{
+    .sidebar,.menu-toggle,.overlay,.toast{display:none !important;}
+    main{padding:0;}
+    body{background:#fff;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="8" fill="#F28C1E"/>
+          <g stroke-linecap="round" stroke-width="3.4">
+            <line x1="20" y1="2" x2="20" y2="8" stroke="#F28C1E"/>
+            <line x1="20" y1="32" x2="20" y2="38" stroke="#6DAF3C"/>
+            <line x1="2" y1="20" x2="8" y2="20" stroke="#6DAF3C"/>
+            <line x1="32" y1="20" x2="38" y2="20" stroke="#F5C542"/>
+            <line x1="7" y1="7" x2="11.5" y2="11.5" stroke="#F5C542"/>
+            <line x1="28.5" y1="28.5" x2="33" y2="33" stroke="#6DAF3C"/>
+            <line x1="33" y1="7" x2="28.5" y2="11.5" stroke="#6DAF3C"/>
+            <line x1="11.5" y1="28.5" x2="7" y2="33" stroke="#F28C1E"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Chamorin</div>
+        <div class="sub">Espace client</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <button class="nav-item active" data-target="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Tableau de bord
+      </button>
+      <button class="nav-item" data-target="commandes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 7Z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        Commande en cours
+      </button>
+      <button class="nav-item" data-target="historique">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l4 2"/></svg>
+        Historique 2025 / 2026
+      </button>
+      <button class="nav-item" data-target="tops">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M6 13v8"/><path d="M18 8v13"/></svg>
+        Suivi des ventes produits
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="icon-row">
+        <button class="icon-btn" id="openHelpBtn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 2-2.4 3.5"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>
+          Aide
+        </button>
+        <button class="icon-btn" id="openSettingsBtn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+          Paramètres
+        </button>
+      </div>
+      <button class="sav-btn" id="openSavBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+        SAV
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="menu-toggle" id="menuToggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <h1 id="pageTitle">Tableau de bord</h1>
+      </div>
+      <div class="client-chip">
+        <div class="avatar">LM</div>
+        <span>Connecté en tant que <b>Leroy Merlin — Perpignan</b> · code client <b>LM-66000</b></span>
+      </div>
+    </div>
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="section active" id="dashboard">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="icon" style="background:var(--charcoal-soft);color:#fff;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="value" id="kpiCa26">—</div>
+          <div class="label">Chiffre d'affaires 2026</div>
+          <span class="delta up" id="kpiCaDelta">—</span>
+        </div>
+        <div class="kpi">
+          <div class="icon" style="background:var(--orange);color:#fff;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 7Z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+          </div>
+          <div class="value" id="kpiOrder">—</div>
+          <div class="label">Commande en cours</div>
+          <span class="delta warn" id="kpiOrderSub">—</span>
+        </div>
+        <div class="kpi">
+          <div class="icon" style="background:var(--green);color:#fff;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 7Z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/><path d="M9 12h6"/></svg>
+          </div>
+          <div class="value" id="kpiActive">—</div>
+          <div class="label">Commandes actives</div>
+          <span class="delta up" id="kpiTotalRealised">—</span>
+        </div>
+        <div class="kpi">
+          <div class="icon" id="kpiRuptureIcon" style="background:var(--green);color:#fff;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="value" id="kpiRupture">—</div>
+          <div class="label">Ruptures sur la commande en cours</div>
+          <span class="delta" id="kpiRuptureBadge">—</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Suivi de vos commandes en cours</h2>
+            <span class="hint">Statut logistique en temps réel</span>
+          </div>
+          <div id="trackerList"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Commandes actives</h2>
+            <span class="hint">Références commandées, en un coup d'œil</span>
+          </div>
+          <div id="activeOrdersList"></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:0;">
+        <div class="panel-head">
+          <h2>Disponibilité de la commande en cours</h2>
+          <span class="hint" id="orderAvailHint"></span>
+        </div>
+        <div class="rupture-list" id="orderAvailability"></div>
+      </div>
+    </section>
+
+    <!-- ============ COMMANDE EN COURS ============ -->
+    <section class="section" id="commandes">
+      <button class="link-btn" id="backFromCommandes" style="margin-bottom:14px;display:inline-flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        Retour
+      </button>
+      <div class="panel" id="orderStatusBanner" style="display:flex;align-items:center;gap:14px;">
+        <div class="icon" id="orderStatusIcon" style="width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--green);color:#fff;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:15px;" id="orderStatusTitle">Commande complète</div>
+          <div class="muted" style="font-size:12.8px;" id="orderStatusSub">Toutes les références sont disponibles</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Commande en cours — <span id="orderRef">CM-2026-114</span></h2>
+          <span class="badge prep"><span class="dot"></span>En préparation</span>
+        </div>
+        <p class="muted" style="margin-top:0;font-size:13.4px;">Réassort maçonnerie &amp; aménagement extérieur — <span id="orderMeta"></span></p>
+        <table>
+          <thead><tr><th>Référence produit</th><th class="num">Quantité</th><th class="num">Montant</th><th>Disponibilité</th><th></th></tr></thead>
+          <tbody id="orderFullBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ HISTORIQUE ============ -->
+    <section class="section" id="historique">
+      <div class="panel">
+        <div class="panel-head"><h2>Chiffre d'affaires — 2025 vs 2026</h2></div>
+        <div class="stat-compare">
+          <div class="stat-block"><div class="n" id="statCa25">—</div><div class="l">CA 2025</div></div>
+          <div class="stat-arrow" id="statArrow">→ —</div>
+          <div class="stat-block"><div class="n" id="statCa26">—</div><div class="l">CA 2026</div></div>
+          <div class="stat-block"><div class="n" id="statQ26">—</div><div class="l">Unités commandées en 2026</div></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:0;">
+        <div class="panel-head">
+          <h2>Historique de vos commandes</h2>
+          <span class="hint">Cliquez sur une commande pour voir le détail</span>
+        </div>
+        <p class="muted" style="margin-top:0;margin-bottom:14px;font-size:12.6px;">Exemple de présentation — l'historique réel de vos commandes s'affichera ici une fois le portail connecté à Divalto.</p>
+        <table>
+          <thead><tr><th>Date</th><th>N° commande</th><th class="num">Montant</th><th>Statut</th><th></th></tr></thead>
+          <tbody id="orderHistoryBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SUIVI DES VENTES PRODUITS ============ -->
+    <section class="section" id="tops">
+      <div class="panel" style="margin-bottom:0;">
+        <div class="panel-head">
+          <h2>Détail de toutes vos références (132)</h2>
+          <div class="searchbox">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="searchInput" placeholder="Rechercher une référence...">
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="n">Désignation produit <span class="arrow"></span></th>
+                <th class="num" data-sort="q25">Qté 2025 <span class="arrow"></span></th>
+                <th class="num" data-sort="q26">Qté 2026 <span class="arrow"></span></th>
+                <th class="num" data-sort="ca25">CA 2025 <span class="arrow"></span></th>
+                <th class="num" data-sort="ca26">CA 2026 <span class="arrow">▼</span></th>
+                <th class="num" data-sort="ecart">Écart valeur <span class="arrow"></span></th>
+                <th class="num" data-sort="evol">Évol. CA <span class="arrow"></span></th>
+              </tr>
+            </thead>
+            <tbody id="productsBody"></tbody>
+            <tfoot><tr class="total-row" id="productsTotalRow"></tr></tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ MODAL SAV / LITIGE ============ -->
+<div class="overlay" id="savOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>SAV — Déclarer un litige</h3>
+      <button id="closeSav" aria-label="Fermer">✕</button>
+    </div>
+    <p class="sub">Votre demande est automatiquement transmise au service qualité et à votre commercial, avec votre commande déjà identifiée.</p>
+    <div class="field">
+      <label for="cmdSelect">Sélection de la commande</label>
+      <select id="cmdSelect"></select>
+    </div>
+    <div class="field">
+      <label for="articleSelect">Article concerné</label>
+      <select id="articleSelect"></select>
+    </div>
+    <div class="field">
+      <label for="motifSelect">Motif</label>
+      <select id="motifSelect">
+        <option>Produit endommagé à réception</option>
+        <option>Écart de quantité livrée</option>
+        <option>Erreur de référence</option>
+        <option>Retard de livraison</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="descr">Description</label>
+      <textarea id="descr" placeholder="Décrivez le litige..."></textarea>
+    </div>
+    <div class="field">
+      <label>Photo ou justificatif</label>
+      <div class="upload">📎 Glisser une photo ici, ou cliquer pour choisir un fichier</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="cancelSav">Annuler</button>
+      <button class="btn primary" id="submitSav">Envoyer le litige</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL AIDE ============ -->
+<div class="overlay" id="helpOverlay">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head">
+      <h3>À quoi sert cet espace ?</h3>
+      <button id="closeHelp" aria-label="Fermer">✕</button>
+    </div>
+    <p class="sub" style="margin-bottom:16px;">L'objectif de cet espace est de vous rendre autonome : retrouvez à tout moment les réponses à vos questions sur vos commandes, sans attendre un appel ou un email.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px;">
+      <div style="display:flex;gap:12px;">
+        <div class="icon" style="width:32px;height:32px;border-radius:8px;background:var(--charcoal-soft);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        </div>
+        <div><b style="font-size:13.6px;">Tableau de bord</b><div class="muted" style="font-size:12.6px;">Vue d'ensemble : chiffre d'affaires, commande en cours et suivi logistique en temps réel de vos livraisons.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <div class="icon" style="width:32px;height:32px;border-radius:8px;background:var(--orange);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 7Z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        </div>
+        <div><b style="font-size:13.6px;">Commande en cours</b><div class="muted" style="font-size:12.6px;">Le détail complet de votre commande, avec la disponibilité de chaque référence — pour savoir immédiatement si elle est complète.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <div class="icon" style="width:32px;height:32px;border-radius:8px;background:var(--green);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l4 2"/></svg>
+        </div>
+        <div><b style="font-size:13.6px;">Historique 2025 / 2026</b><div class="muted" style="font-size:12.6px;">Toutes vos commandes passées : date, montant, statut — cliquez sur une commande pour voir son détail.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <div class="icon" style="width:32px;height:32px;border-radius:8px;background:var(--charcoal);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M6 13v8"/><path d="M18 8v13"/></svg>
+        </div>
+        <div><b style="font-size:13.6px;">Suivi des ventes produits</b><div class="muted" style="font-size:12.6px;">Le détail de toutes vos références commandées, avec les évolutions d'une année sur l'autre.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <div class="icon" style="width:32px;height:32px;border-radius:8px;background:var(--red);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div><b style="font-size:13.6px;">SAV</b><div class="muted" style="font-size:12.6px;">Déclarez un litige ou posez une question sur une commande, déjà identifiée — transmise automatiquement aux bons interlocuteurs, sans email ni appel.</div></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn primary" id="closeHelp2" style="flex:1;">J'ai compris</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL PARAMETRES / INVITATIONS ============ -->
+<div class="overlay" id="settingsOverlay">
+  <div class="modal" style="max-width:540px;">
+    <div class="modal-head">
+      <h3>Paramètres</h3>
+      <button id="closeSettings" aria-label="Fermer">✕</button>
+    </div>
+    <p class="sub">Invitez d'autres collaborateurs de votre magasin à accéder à cet espace.</p>
+    <div class="field">
+      <label for="inviteEmail">Adresse email</label>
+      <input type="email" id="inviteEmail" placeholder="prenom.nom@leroymerlin.fr">
+    </div>
+    <div class="field">
+      <label for="inviteRole">Rôle</label>
+      <select id="inviteRole">
+        <option>Lecture seule — consultation des commandes</option>
+        <option>Peut déclarer des litiges et poser des questions</option>
+        <option>Administrateur — peut aussi inviter d'autres personnes</option>
+      </select>
+    </div>
+    <div class="modal-actions" style="margin-top:0;margin-bottom:18px;">
+      <button class="btn primary" id="submitInvite" style="flex:1;">Inviter</button>
+    </div>
+    <div>
+      <label style="display:block;font-size:12.8px;font-weight:600;margin-bottom:8px;">Personnes ayant accès</label>
+      <div id="inviteList" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="closeSettings2" style="flex:1;">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Votre demande a bien été envoyée</div>
+
+<!-- ============ MODAL QUESTION SUR UNE COMMANDE ============ -->
+<div class="overlay" id="qOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Question sur une commande</h3>
+      <button id="closeQ" aria-label="Fermer">✕</button>
+    </div>
+    <p class="sub">Commande <b id="qOrderRef"></b> — article <b id="qArticleRef"></b> déjà identifiés — votre question est transmise directement au service commande.</p>
+    <div class="field">
+      <label for="qText">Votre question</label>
+      <textarea id="qText" placeholder="Ex : est-il possible d'avancer la date de livraison ?"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="cancelQ">Annuler</button>
+      <button class="btn primary" id="submitQ">Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL DETAIL COMMANDE (historique) ============ -->
+<div class="overlay" id="orderDetailOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Commande <span id="odRef"></span> <span class="muted" style="font-size:12px;font-weight:400;">(exemple)</span></h3>
+      <button id="closeOd" aria-label="Fermer">✕</button>
+    </div>
+    <p class="sub">Passée le <span id="odDate"></span> — <span id="odStatus"></span></p>
+    <div id="odRuptureNote"></div>
+    <table>
+      <thead><tr><th>Référence produit</th><th class="num">Quantité</th><th class="num">Montant</th><th>Disponibilité</th></tr></thead>
+      <tbody id="odBody"></tbody>
+      <tfoot><tr class="total-row"><td>Total</td><td class="num" id="odQty"></td><td class="num" id="odTotal"></td><td></td></tr></tfoot>
+    </table>
+    <div class="modal-actions">
+      <button class="btn ghost" id="closeOd2">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script id="portal-data" type="application/json">{"client": {"name": "Leroy Merlin — Perpignan", "code": "LM-66000"}, "products": [{"n": "SAC 25KG MARBRE ROULE BLANC 15/25 NATERIAL", "q25": 576, "q26": 672, "ca25": 4694, "ca26": 5495, "ecart": 801, "evol": 17.1}, {"n": "BRIQUE REFRACT 5X11X22 ROUGE", "q25": 2096, "q26": 2620, "ca25": 3878, "ca26": 4996, "ecart": 1118, "evol": 28.8}, {"n": "BRIQUE REFRACT 3X11X22 JAUNE FLAMME", "q25": 2250, "q26": 3000, "ca25": 3443, "ca26": 4668, "ecart": 1225, "evol": 35.6}, {"n": "SAC 25KG MARBRE BLANC 8/16 NATERIAL", "q25": 500, "q26": 800, "ca25": 2955, "ca26": 4488, "ecart": 1533, "evol": 51.9}, {"n": "PLAQUE BETON BIFACE PINEDE 184X36CM", "q25": 0, "q26": 119, "ca25": 0, "ca26": 4138, "ecart": 4138, "evol": null}, {"n": "COUVRE MUR ARRONDI TC 40X28X5 ROUGE", "q25": 1200, "q26": 840, "ca25": 5803, "ca26": 4111, "ecart": -1692, "evol": -29.2}, {"n": "PLAQUE BETON BIFACE MAQUIS 184X36CM", "q25": 0, "q26": 110, "ca25": 0, "ca26": 3914, "ecart": 3914, "evol": null}, {"n": "SAC 25KG GALET BLANC 30/60 TORHO", "q25": 400, "q26": 450, "ca25": 3364, "ca26": 3774, "ecart": 410, "evol": 12.2}, {"n": "CLAUSTRA AGADIR TC 28X28X9", "q25": 120, "q26": 720, "ca25": 600, "ca26": 3694, "ecart": 3094, "evol": 515.7}, {"n": "FORAINE PERFOREE 80X28X5 GRIS ARDOISE", "q25": 55, "q26": 220, "ca25": 822, "ca26": 3391, "ecart": 2569, "evol": 312.5}, {"n": "PLAQUE PLEINE 192X50X3.5 GRIS", "q25": 0, "q26": 172, "ca25": 0, "ca26": 3291, "ecart": 3291, "evol": null}, {"n": "BRIQUE REFRACT 3X11X22 ROUGE", "q25": 1500, "q26": 2250, "ca25": 2205, "ca26": 3271, "ecart": 1066, "evol": 48.3}, {"n": "PILIER A ENDUIRE 27X27 H20 GRIS", "q25": 1056, "q26": 1536, "ca25": 2140, "ca26": 3225, "ecart": 1085, "evol": 50.7}, {"n": "COUVRE MUR ARRONDI TC 40X23X5 ROUGE", "q25": 450, "q26": 750, "ca25": 1899, "ca26": 3212, "ecart": 1313, "evol": 69.1}, {"n": "BRIQUE REFRACT 5X11X22 JAUNE FLAMME", "q25": 2620, "q26": 1572, "ca25": 4941, "ca26": 3139, "ecart": -1802, "evol": -36.5}, {"n": "BRIQUE CLOISON TRADI 4X25X38.5", "q25": 1800, "q26": 2700, "ca25": 1998, "ca26": 3063, "ecart": 1065, "evol": 53.3}, {"n": "BORDURE DROITE PAVE SEINE TON PIERRE 50X11X7.5", "q25": 448, "q26": 1120, "ca25": 1214, "ca26": 3047, "ecart": 1833, "evol": 151.0}, {"n": "APPUI FENETRE 14/30 TC", "q25": 1540, "q26": 1540, "ca25": 2671, "ca26": 2836, "ecart": 165, "evol": 6.2}, {"n": "MURET CEVENNES 50X11X9 CREME", "q25": 336, "q26": 384, "ca25": 2386, "ca26": 2819, "ecart": 433, "evol": 18.1}, {"n": "BRIQUE REFRACT 3X11X22 GRIS ANTHRACITE", "q25": 1125, "q26": 1125, "ca25": 2745, "ca26": 2815, "ecart": 70, "evol": 2.6}, {"n": "PILIER A ENDUIRE 20X20 H25 GRIS", "q25": 1125, "q26": 1125, "ca25": 2610, "ca26": 2684, "ecart": 74, "evol": 2.8}, {"n": "SAC 15KG GALET BLANC CARRARE 25/40 NATERIAL", "q25": 420, "q26": 420, "ca25": 2625, "ca26": 2677, "ecart": 52, "evol": 2.0}, {"n": "CLAUSTRA BLANC 20X40 REF 789", "q25": 360, "q26": 480, "ca25": 1894, "ca26": 2579, "ecart": 685, "evol": 36.2}, {"n": "COUVRE MUR ARRONDI 50X28 PIERRE", "q25": 168, "q26": 336, "ca25": 1217, "ca26": 2579, "ecart": 1362, "evol": 111.9}, {"n": "NEZ DE MARCHE 20X28 ROUGE CAL", "q25": 640, "q26": 840, "ca25": 1888, "ca26": 2538, "ecart": 650, "evol": 34.4}, {"n": "BRIQUE CLOISON TRADI 5X25X38.5", "q25": 2250, "q26": 2250, "ca25": 2419, "ca26": 2497, "ecart": 78, "evol": 3.2}, {"n": "SAC 35KG MARBRE BLANC 8/16 NATERIAL", "q25": 315, "q26": 350, "ca25": 2265, "ca26": 2362, "ecart": 97, "evol": 4.3}, {"n": "COUVRE MUR CATHARE ECO 50X28X4", "q25": 0, "q26": 216, "ca25": 0, "ca26": 2344, "ecart": 2344, "evol": null}, {"n": "FORAINE PERFOREE 40X28X5 ROUGE (H)", "q25": 720, "q26": 600, "ca25": 2750, "ca26": 2301, "ecart": -449, "evol": -16.3}, {"n": "PAS JAPONAIS CERAMIQUE 42X36X2 PIERRE", "q25": 288, "q26": 288, "ca25": 2098, "ca26": 2111, "ecart": 13, "evol": 0.6}, {"n": "FORAINE PERFOREE 40X23X5 ROUGE (H)", "q25": 450, "q26": 600, "ca25": 1598, "ca26": 2109, "ecart": 511, "evol": 32.0}, {"n": "PILIER A ENDUIRE 37X37 H20 GRIS", "q25": 378, "q26": 486, "ca25": 1383, "ca26": 1812, "ecart": 429, "evol": 31.0}, {"n": "SAC 25KG GALET BLANC CARRARE 60/100 NATERIAL", "q25": 120, "q26": 160, "ca25": 1391, "ca26": 1807, "ecart": 416, "evol": 29.9}, {"n": "COUVRE MUR TRAVERTIN 100X30X3 BEIGE VIEILLI", "q25": 66, "q26": 76, "ca25": 1445, "ca26": 1732, "ecart": 287, "evol": 19.9}, {"n": "ELT PILIER 30X30X25 SABLE", "q25": 54, "q26": 324, "ca25": 275, "ca26": 1702, "ecart": 1427, "evol": 518.9}, {"n": "BRIQUE CLOISON 2 ALV 7X20X38.5", "q25": 2304, "q26": 1152, "ca25": 3318, "ca26": 1693, "ecart": -1625, "evol": -49.0}, {"n": "POTEAU INTER. BIFACE 280CM RAINURE COMPLETE", "q25": 0, "q26": 44, "ca25": 0, "ca26": 1651, "ecart": 1651, "evol": null}, {"n": "SAC 25KG MARBRE BLANC CARRARE 12/18 NATERIAL", "q25": 168, "q26": 210, "ca25": 1396, "ca26": 1586, "ecart": 190, "evol": 13.6}, {"n": "PAS JAPONAIS STRUCTURE SABLE X60", "q25": 0, "q26": 300, "ca25": 0, "ca26": 1443, "ecart": 1443, "evol": null}, {"n": "DALLE CEVENNES 49.5X49.5X2,2 CREME", "q25": 228, "q26": 304, "ca25": 1031, "ca26": 1408, "ecart": 377, "evol": 36.6}, {"n": "POTEAU 4 PLAQUES INTER 12X12X250 GRIS", "q25": 0, "q26": 46, "ca25": 0, "ca26": 1316, "ecart": 1316, "evol": null}, {"n": "APPUI FENETRE TRAVERTIN BEIGE 20/35/1.2 BORD DROIT", "q25": 0, "q26": 240, "ca25": 0, "ca26": 1315, "ecart": 1315, "evol": null}, {"n": "MAIN COURANTE TC 25X15X6 AGARA", "q25": 120, "q26": 360, "ca25": 408, "ca26": 1277, "ecart": 869, "evol": 213.0}, {"n": "APPUI TC OCCITAN 20/35/1.8X4.5 FLAMME LANGUEDOC", "q25": 0, "q26": 292, "ca25": 0, "ca26": 1273, "ecart": 1273, "evol": null}, {"n": "FILET 20KG CONCASSE ARLEQUIN 8/12 (BLA, ROS, BLE)", "q25": 0, "q26": 180, "ca25": 0, "ca26": 1221, "ecart": 1221, "evol": null}, {"n": "BORDURE COURBE PAVE SEINE TON PIERRE 50X11X7.5", "q25": 144, "q26": 288, "ca25": 544, "ca26": 1136, "ecart": 592, "evol": 108.8}, {"n": "BOISSEAU 30X30 H33 TC", "q25": 12, "q26": 36, "ca25": 351, "ca26": 1126, "ecart": 775, "evol": 220.8}, {"n": "COUVRE MUR PLAT BP 100X30X4 ANTHRACITE", "q25": 0, "q26": 56, "ca25": 0, "ca26": 1069, "ecart": 1069, "evol": null}, {"n": "SAC 25KG GALET ZEN POLI 50/70 NOIR NATERIAL", "q25": 60, "q26": 60, "ca25": 1079, "ca26": 1049, "ecart": -30, "evol": -2.8}, {"n": "BORDURE TRAVERTIN 50X10X7 VIEILLI", "q25": 0, "q26": 144, "ca25": 0, "ca26": 1027, "ecart": 1027, "evol": null}, {"n": "MAIN COURANTE LONG 50 BLANC", "q25": 96, "q26": 192, "ca25": 496, "ca26": 1008, "ecart": 512, "evol": 103.2}, {"n": "COUVRE MUR PYRAMIDE 100X30X3 BEIGE (SABLE/BROSSE)", "q25": 0, "q26": 44, "ca25": 0, "ca26": 978, "ecart": 978, "evol": null}, {"n": "BRIQUE REFRACT 5X5X22 JAUNE FLAMME (X296)", "q25": 0, "q26": 592, "ca25": 0, "ca26": 977, "ecart": 977, "evol": null}, {"n": "ELT PILIER LISSE DECO 29X29X16.7 OCRE", "q25": 72, "q26": 144, "ca25": 472, "ca26": 973, "ecart": 501, "evol": 106.1}, {"n": "SAC 35KG CONCASSE NOIR 6/14", "q25": 168, "q26": 126, "ca25": 1262, "ca26": 964, "ecart": -298, "evol": -23.6}, {"n": "APPUI TC OCCITAN 20/35/1.8X4.5 ANTHRACITE", "q25": 0, "q26": 120, "ca25": 0, "ca26": 960, "ecart": 960, "evol": null}, {"n": "PRELINTEAU 20X100 EP 6", "q25": 20, "q26": 40, "ca25": 460, "ca26": 949, "ecart": 489, "evol": 106.3}, {"n": "SAC 25KG ARDOISE BLEUE 30/60", "q25": 135, "q26": 135, "ca25": 894, "ca26": 933, "ecart": 39, "evol": 4.4}, {"n": "COUVRE MUR DECOLISSE 50X28X3 GRIS", "q25": 96, "q26": 192, "ca25": 447, "ca26": 925, "ecart": 478, "evol": 106.9}, {"n": "LATTE DE FINITION PLATE BIFACE GRISE 180CM", "q25": 0, "q26": 40, "ca25": 0, "ca26": 900, "ecart": 900, "evol": null}, {"n": "TRAVERSE ARDOISE NERO 50X25X3", "q25": 208, "q26": 104, "ca25": 1683, "ca26": 854, "ecart": -829, "evol": -49.3}, {"n": "BORDURE DROITE PAVE SEINE GRIS 50X11X7.5", "q25": 224, "q26": 336, "ca25": 558, "ca26": 841, "ecart": 283, "evol": 50.7}, {"n": "FILET 20KG CONCASSE DALMATIEN 8/12", "q25": 0, "q26": 120, "ca25": 0, "ca26": 831, "ecart": 831, "evol": null}, {"n": "FILET 15KG GALET SNOW WHITE 40/60", "q25": 400, "q26": 80, "ca25": 3980, "ca26": 830, "ecart": -3150, "evol": -79.1}, {"n": "BORDURE AUBRAC 50X9X10 CREME", "q25": 42, "q26": 84, "ca25": 387, "ca26": 820, "ecart": 433, "evol": 111.9}, {"n": "ELT PILIER LISSE DECO 29X29X16.7 GRIS", "q25": 72, "q26": 144, "ca25": 372, "ca26": 768, "ecart": 396, "evol": 106.5}, {"n": "PIQUET SCHISTE ARDOISIER 100X10X8 SCIE 60 PIECES", "q25": 0, "q26": 120, "ca25": 0, "ca26": 760, "ecart": 760, "evol": null}, {"n": "BRIQUE REFRACT 5X11X22 GRIS ANTHRACITE", "q25": 675, "q26": 225, "ca25": 2052, "ca26": 734, "ecart": -1318, "evol": -64.2}, {"n": "PAS JAPONAIS CERAMIQUE 42X36X2 GRIS", "q25": 192, "q26": 96, "ca25": 1407, "ca26": 704, "ecart": -703, "evol": -50.0}, {"n": "PAS JAPONAIS PETALE NOIR", "q25": 180, "q26": 180, "ca25": 643, "ca26": 680, "ecart": 37, "evol": 5.8}, {"n": "CLAUSTRA AERATION 13X21.5", "q25": 70, "q26": 56, "ca25": 792, "ca26": 643, "ecart": -149, "evol": -18.8}, {"n": "SAC 20KG GRAVIER ROCKIN ROUGE", "q25": 120, "q26": 60, "ca25": 1199, "ca26": 617, "ecart": -582, "evol": -48.5}, {"n": "CLAUSTRA AERATION 12X12", "q25": 60, "q26": 90, "ca25": 392, "ca26": 612, "ecart": 220, "evol": 56.1}, {"n": "PAS JAPONAIS CEVENNES CREME 36X24X2,8", "q25": 432, "q26": 144, "ca25": 1620, "ca26": 589, "ecart": -1031, "evol": -63.6}, {"n": "APPUI TC OCCITAN 15/30/1.8X3 ANTHRACITE", "q25": 121, "q26": 121, "ca25": 575, "ca26": 558, "ecart": -17, "evol": -3.0}, {"n": "BORDURE ST FLOUR CREME 50X7X10 LM", "q25": 150, "q26": 100, "ca25": 776, "ca26": 553, "ecart": -223, "evol": -28.7}, {"n": "SAC 15KG GRAVIER DECO ZEN NOIR 15/25 NATERIAL", "q25": 112, "q26": 56, "ca25": 1025, "ca26": 550, "ecart": -475, "evol": -46.3}, {"n": "PAS JAPONAIS STRUCTURE SABLE X120", "q25": 480, "q26": 120, "ca25": 2251, "ca26": 535, "ecart": -1716, "evol": -76.2}, {"n": "GANIVELLE NOISETIER 1M00 - RLX 5M écart 3/5CM", "q25": 0, "q26": 9, "ca25": 0, "ca26": 509, "ecart": 509, "evol": null}, {"n": "BORDURE SCHISTE ARDOISIER 50X8X10", "q25": 100, "q26": 100, "ca25": 474, "ca26": 481, "ecart": 7, "evol": 1.5}, {"n": "DALLE AUTOPORTANTE PERFOREE 39X39X4 MARRON", "q25": 240, "q26": 120, "ca25": 936, "ca26": 468, "ecart": -468, "evol": -50.0}, {"n": "BRIQUE REFRACT 5X5X22 ROUGE (X296)", "q25": 296, "q26": 296, "ca25": 441, "ca26": 465, "ecart": 24, "evol": 5.4}, {"n": "BORDURE COURBE AUBRAC CREME R60", "q25": 40, "q26": 40, "ca25": 437, "ca26": 452, "ecart": 15, "evol": 3.4}, {"n": "CHAPEAU PLAT BIFACE POTEAU INTERMEDIAIRE", "q25": 0, "q26": 38, "ca25": 0, "ca26": 439, "ecart": 439, "evol": null}, {"n": "MINERALSPRAY BIDON 5L (16 m2)", "q25": 16, "q26": 12, "ca25": 574, "ca26": 435, "ecart": -139, "evol": -24.2}, {"n": "PIQUET ECOFIRST H.26,5CM PAQUET DE 12", "q25": 0, "q26": 60, "ca25": 0, "ca26": 434, "ecart": 434, "evol": null}, {"n": "POTEAU DEPART BIFACE 280CM RAINURE COMPLETE", "q25": 0, "q26": 10, "ca25": 0, "ca26": 426, "ecart": 426, "evol": null}, {"n": "CHAPEAU POINTU 36X36X5 SABLE", "q25": 0, "q26": 24, "ca25": 0, "ca26": 418, "ecart": 418, "evol": null}, {"n": "BOISSEAU 25X25 H33 TC", "q25": 0, "q26": 18, "ca25": 0, "ca26": 409, "ecart": 409, "evol": null}, {"n": "MANULINTEAU 20X20X140", "q25": 10, "q26": 10, "ca25": 403, "ca26": 403, "ecart": 0, "evol": 0.0}, {"n": "MANULINTEAU 20X20X260", "q25": 0, "q26": 5, "ca25": 0, "ca26": 395, "ecart": 395, "evol": null}, {"n": "COUVRE MUR PLAT GASCOGNE BLANC 49X28X4 LM", "q25": 0, "q26": 40, "ca25": 0, "ca26": 388, "ecart": 388, "evol": null}, {"n": "BORDURE DROITE PAVE SEINE NOIRE 50X11X7.5", "q25": 112, "q26": 112, "ca25": 330, "ca26": 361, "ecart": 31, "evol": 9.4}, {"n": "PAS JAPONAIS STRUCTURE ANTHRACITE X60", "q25": 180, "q26": 60, "ca25": 982, "ca26": 339, "ecart": -643, "evol": -65.5}, {"n": "CHAPEAU POINTU 36X36X5 GRIS", "q25": 24, "q26": 24, "ca25": 324, "ca26": 335, "ecart": 11, "evol": 3.4}, {"n": "PAS JAPONAIS PETALE PIERRE", "q25": 90, "q26": 90, "ca25": 321, "ca26": 332, "ecart": 11, "evol": 3.4}, {"n": "CHAPEAU POINTU 46X46X5 GRIS", "q25": 1, "q26": 16, "ca25": 17, "ca26": 282, "ecart": 265, "evol": 1558.8}, {"n": "SEUIL PORTE 34 TABLEAU 120/130 GRIS", "q25": 1, "q26": 4, "ca25": 66, "ca26": 273, "ecart": 207, "evol": 313.6}, {"n": "COUVRE MUR OPTIPOSE PLAT 99X25 BLANC", "q25": 0, "q26": 14, "ca25": 0, "ca26": 248, "ecart": 248, "evol": null}, {"n": "BORDURE COURBE PAVE SEINE GRIS 50X11X7.5", "q25": 0, "q26": 72, "ca25": 0, "ca26": 239, "ecart": 239, "evol": null}, {"n": "BORDURE ECOFIRST NOIRE ROULEAU 10ML H.14CM", "q25": 48, "q26": 12, "ca25": 868, "ca26": 217, "ecart": -651, "evol": -75.0}, {"n": "COUVRE MUR 2 PENTES 99X30X3 GRIS", "q25": 1, "q26": 17, "ca25": 11, "ca26": 195, "ecart": 184, "evol": 1672.7}, {"n": "BORDURE TETRALINE GRISE 78CM H.14 + 1 PIQUET", "q25": 0, "q26": 66, "ca25": 0, "ca26": 193, "ecart": 193, "evol": null}, {"n": "BORDURE ACIER GALVA 99X12", "q25": 30, "q26": 30, "ca25": 171, "ca26": 171, "ecart": 0, "evol": 0.0}, {"n": "PROFILES H ECOPIC PAQUET DE 10", "q25": 25, "q26": 11, "ca25": 365, "ca26": 165, "ecart": -200, "evol": -54.8}, {"n": "PLAQUE BETON BIFACE OYAT 184X36CM", "q25": 0, "q26": 5, "ca25": 0, "ca26": 132, "ecart": 132, "evol": null}, {"n": "BORDURE DROITE ECOLAT GRIS 200X19X1", "q25": 12, "q26": 12, "ca25": 107, "ca26": 107, "ecart": 0, "evol": 0.0}, {"n": "MINERALSPRAY 750ML (2m2)", "q25": 0, "q26": 12, "ca25": 0, "ca26": 107, "ecart": 107, "evol": null}, {"n": "BORDURE DROITE ECOLAT GRIS 120X14X1", "q25": 60, "q26": 20, "ca25": 302, "ca26": 101, "ecart": -201, "evol": -66.6}, {"n": "POTEAU ANGLE BIFACE 280CM RAINURE COMPLETE", "q25": 0, "q26": 2, "ca25": 0, "ca26": 89, "ecart": 89, "evol": null}, {"n": "SEUIL PORTE 34 TABLEAU 140/150 GRIS", "q25": 0, "q26": 1, "ca25": 0, "ca26": 79, "ecart": 79, "evol": null}, {"n": "SEUIL CLASSIQUE 34X100 GRIS", "q25": 0, "q26": 1, "ca25": 0, "ca26": 52, "ecart": 52, "evol": null}, {"n": "CHAPEAU PLAT BIFACE POTEAU DEPART", "q25": 0, "q26": 4, "ca25": 0, "ca26": 46, "ecart": 46, "evol": null}, {"n": "ASPIRATEUR CHEMINEE 20X40", "q25": 2, "q26": 0, "ca25": 113, "ca26": 0, "ecart": -113, "evol": -100.0}, {"n": "BOISSEAU 20X20 H33 TC", "q25": 72, "q26": 0, "ca25": 963, "ca26": 0, "ecart": -963, "evol": -100.0}, {"n": "BORDURE CORTEN ASPECT ROUILLE 118X13", "q25": 30, "q26": 0, "ca25": 239, "ca26": 0, "ecart": -239, "evol": -100.0}, {"n": "BORDURE ECOLAT GRIS ROULEAU 10ML H.14CM", "q25": 48, "q26": 0, "ca25": 1732, "ca26": 0, "ecart": -1732, "evol": -100.0}, {"n": "CHAPEAU 4 PENTES 32X32X4 GRIS", "q25": 30, "q26": 0, "ca25": 475, "ca26": 0, "ecart": -475, "evol": -100.0}, {"n": "CHAPEAU 4 PENTES 32X32X4 OCRE", "q25": 50, "q26": 0, "ca25": 827, "ca26": 0, "ecart": -827, "evol": -100.0}, {"n": "COUVRE MUR 2 PENTES 99X25X3 OCRE", "q25": 27, "q26": 0, "ca25": 313, "ca26": 0, "ecart": -313, "evol": -100.0}, {"n": "COUVRE MUR ARRONDI 50X28 BLANC", "q25": 5, "q26": 0, "ca25": 37, "ca26": 0, "ecart": -37, "evol": -100.0}, {"n": "COUVRE MUR PLAT TC 40X29 ANTHRACITE", "q25": 60, "q26": 0, "ca25": 695, "ca26": 0, "ecart": -695, "evol": -100.0}, {"n": "FONTAINE AVALON GRISE 38X42X76 ROBINET/BONDE GRIS", "q25": 1, "q26": 0, "ca25": 133, "ca26": 0, "ecart": -133, "evol": -100.0}, {"n": "GANIVELLE NOISETIER 1M20 - RLX 5M écart 3/5CM", "q25": 9, "q26": 0, "ca25": 572, "ca26": 0, "ecart": -572, "evol": -100.0}, {"n": "MINERALSPRAY 650ML (2m2)", "q25": 12, "q26": 0, "ca25": 129, "ca26": 0, "ecart": -129, "evol": -100.0}, {"n": "MINI MONOLITHE ARDOISE <100CM PIED SCIE", "q25": 16, "q26": 0, "ca25": 660, "ca26": 0, "ecart": -660, "evol": -100.0}, {"n": "PAVE TRAVERTIN 10X10X3", "q25": 3200, "q26": 0, "ca25": 1376, "ca26": 0, "ecart": -1376, "evol": -100.0}, {"n": "PDP BETON MAYA BRIQUE ROSEE 245X64MM - BTE 0.68M2", "q25": 45, "q26": 0, "ca25": 594, "ca26": 0, "ecart": -594, "evol": -100.0}, {"n": "PRELINTEAU 20X120 EP 6", "q25": 20, "q26": 0, "ca25": 546, "ca26": 0, "ecart": -546, "evol": -100.0}, {"n": "SAC 25KG SABLE POUR HYDROSABLAGE N°0", "q25": 42, "q26": 0, "ca25": 294, "ca26": 0, "ecart": -294, "evol": -100.0}, {"n": "SEUIL CLASSIQUE 34X90 GRIS", "q25": 1, "q26": 0, "ca25": 46, "ca26": 0, "ecart": -46, "evol": -100.0}, {"n": "TRAVERSE SCHISTE ARDOISIER 75x25 EP.3/5", "q25": 40, "q26": 0, "ca25": 562, "ca26": 0, "ecart": -562, "evol": -100.0}], "order": [{"n": "BOISSEAU 20X20 H33 TC", "qte": 24, "ca": 339, "statut": "ok"}, {"n": "BOISSEAU 25X25 H33 TC", "qte": 18, "ca": 409, "statut": "rupture"}, {"n": "BORDURE DROITE PAVE SEINE GRIS 50X11X7.5", "qte": 112, "ca": 288, "statut": "ok"}, {"n": "BRIQUE CLOISON 2 ALV 7X20X38.5", "qte": 288, "ca": 438, "statut": "ok"}, {"n": "CLAUSTRA AGADIR TC 28X28X9", "qte": 120, "ca": 644, "statut": "partiel"}, {"n": "MANULINTEAU 20X20X280", "qte": 1, "ca": 84, "statut": "ok"}, {"n": "PILIER A ENDUIRE 37X37 H20 GRIS", "qte": 54, "ca": 208, "statut": "ok"}, {"n": "PROFILES H ECOPIC PAQUET DE 10", "qte": 5, "ca": 76, "statut": "ok"}, {"n": "SAC 25KG MARBRE BLANC 8/16 NATERIAL", "qte": 50, "ca": 300, "statut": "ok"}, {"n": "SAC 25KG MARBRE ROULE BLANC 15/25 NATERIAL", "qte": 48, "ca": 396, "statut": "ok"}, {"n": "TUTEUR REPLACE 2,5X2,5X190 (100% RECYCLE)", "qte": 8, "ca": 23, "statut": "ok"}], "declines": [{"n": "FILET 15KG GALET SNOW WHITE 40/60", "q25": 400, "q26": 80, "ca25": 3980, "ca26": 830, "ecart": -3150, "evol": -79.1}, {"n": "BRIQUE REFRACT 5X11X22 JAUNE FLAMME", "q25": 2620, "q26": 1572, "ca25": 4941, "ca26": 3139, "ecart": -1802, "evol": -36.5}, {"n": "BORDURE ECOLAT GRIS ROULEAU 10ML H.14CM", "q25": 48, "q26": 0, "ca25": 1732, "ca26": 0, "ecart": -1732, "evol": -100.0}, {"n": "PAS JAPONAIS STRUCTURE SABLE X120", "q25": 480, "q26": 120, "ca25": 2251, "ca26": 535, "ecart": -1716, "evol": -76.2}, {"n": "COUVRE MUR ARRONDI TC 40X28X5 ROUGE", "q25": 1200, "q26": 840, "ca25": 5803, "ca26": 4111, "ecart": -1692, "evol": -29.2}, {"n": "BRIQUE CLOISON 2 ALV 7X20X38.5", "q25": 2304, "q26": 1152, "ca25": 3318, "ca26": 1693, "ecart": -1625, "evol": -49.0}, {"n": "PAVE TRAVERTIN 10X10X3", "q25": 3200, "q26": 0, "ca25": 1376, "ca26": 0, "ecart": -1376, "evol": -100.0}, {"n": "BRIQUE REFRACT 5X11X22 GRIS ANTHRACITE", "q25": 675, "q26": 225, "ca25": 2052, "ca26": 734, "ecart": -1318, "evol": -64.2}, {"n": "PAS JAPONAIS CEVENNES CREME 36X24X2,8", "q25": 432, "q26": 144, "ca25": 1620, "ca26": 589, "ecart": -1031, "evol": -63.6}, {"n": "BOISSEAU 20X20 H33 TC", "q25": 72, "q26": 0, "ca25": 963, "ca26": 0, "ecart": -963, "evol": -100.0}], "totals": {"q25": 37583, "q26": 40191, "ca25": 122922, "ca26": 159040, "ecart": 36118, "evol": 29.4, "newRefs": 35, "droppedRefs": 19, "orderQty": 728, "orderCa": 3205, "orderRefs": 11, "activeOrders": 3, "totalRealised": 7}, "families": [{"name": "Sac", "ca25": 24443, "ca26": 26302}, {"name": "Brique Refract", "ca25": 19705, "ca26": 21065}, {"name": "Couvre Mur", "ca25": 11867, "ca26": 17781}, {"name": "Plaque Beton", "ca25": 0, "ca26": 8184}, {"name": "Foraine", "ca25": 5170, "ca26": 7801}, {"name": "Pilier A", "ca25": 6133, "ca26": 7721}, {"name": "Brique Cloison", "ca25": 7735, "ca26": 7253}, {"name": "Pas Japonais", "ca25": 9322, "ca26": 6733}, {"name": "Autres familles", "ca25": 38546, "ca26": 56202}], "orderHistory": [{"ref": "CM-2026-114", "date": "21/09/2026", "montant": 3205, "statut": "En cours", "lignes": [{"n": "BOISSEAU 20X20 H33 TC", "qte": 24, "ca": 339, "statut": "ok"}, {"n": "BOISSEAU 25X25 H33 TC", "qte": 18, "ca": 409, "statut": "rupture"}, {"n": "BORDURE DROITE PAVE SEINE GRIS 50X11X7.5", "qte": 112, "ca": 288, "statut": "ok"}, {"n": "BRIQUE CLOISON 2 ALV 7X20X38.5", "qte": 288, "ca": 438, "statut": "ok"}, {"n": "CLAUSTRA AGADIR TC 28X28X9", "qte": 120, "ca": 644, "statut": "partiel"}, {"n": "MANULINTEAU 20X20X280", "qte": 1, "ca": 84, "statut": "ok"}, {"n": "PILIER A ENDUIRE 37X37 H20 GRIS", "qte": 54, "ca": 208, "statut": "ok"}, {"n": "PROFILES H ECOPIC PAQUET DE 10", "qte": 5, "ca": 76, "statut": "ok"}, {"n": "SAC 25KG MARBRE BLANC 8/16 NATERIAL", "qte": 50, "ca": 300, "statut": "ok"}, {"n": "SAC 25KG MARBRE ROULE BLANC 15/25 NATERIAL", "qte": 48, "ca": 396, "statut": "ok"}, {"n": "TUTEUR REPLACE 2,5X2,5X190 (100% RECYCLE)", "qte": 8, "ca": 23, "statut": "ok"}]}, {"ref": "CM-2026-119", "date": "17/09/2026", "montant": 2100, "statut": "Non conforme", "lignes": [{"n": "DALLE CEVENNES 49.5X49.5X2,2 CREME", "qte": 300, "ca": 1390}, {"n": "BORDURE DROITE PAVE SEINE TON PIERRE 50X11X7.5", "qte": 200, "ca": 544}, {"n": "NEZ DE MARCHE 20X28 ROUGE CAL", "qte": 56, "ca": 166}]}, {"ref": "CM-2026-098", "date": "28/08/2026", "montant": 2840, "statut": "Livrée", "lignes": [{"n": "SAC 25KG GALET BLANC 30/60 TORHO", "qte": 60, "ca": 504}, {"n": "BRIQUE REFRACT 3X11X22 ROUGE", "qte": 450, "ca": 655}, {"n": "COUVRE MUR ARRONDI TC 40X28X5 ROUGE", "qte": 300, "ca": 1469}, {"n": "BORDURE DROITE PAVE SEINE TON PIERRE 50X11X7.5", "qte": 80, "ca": 212}]}, {"ref": "CM-2026-076", "date": "02/07/2026", "montant": 4120, "statut": "Livrée", "lignes": [{"n": "PLAQUE BETON BIFACE PINEDE 184X36CM", "qte": 60, "ca": 2086}, {"n": "PILIER A ENDUIRE 27X27 H20 GRIS", "qte": 480, "ca": 1008}, {"n": "SAC 25KG MARBRE BLANC 8/16 NATERIAL", "qte": 180, "ca": 1010}]}, {"ref": "CM-2026-051", "date": "14/05/2026", "montant": 1975, "statut": "Livrée", "lignes": [{"n": "FORAINE PERFOREE 80X28X5 GRIS ARDOISE", "qte": 90, "ca": 1387}, {"n": "BOISSEAU 30X30 H33 TC", "qte": 18, "ca": 563}, {"n": "MAIN COURANTE TC 25X15X6 AGARA", "qte": 8, "ca": 25}]}, {"ref": "CM-2026-022", "date": "19/03/2026", "montant": 3260, "statut": "Livrée", "lignes": [{"n": "BRIQUE REFRACT 3X11X22 JAUNE FLAMME", "qte": 900, "ca": 1400}, {"n": "BORDURE AUBRAC 50X9X10 CREME", "qte": 168, "ca": 1640}, {"n": "CHAPEAU POINTU 46X46X5 GRIS", "qte": 12, "ca": 220}]}, {"ref": "CM-2025-892", "date": "11/12/2025", "montant": 2410, "statut": "Livrée", "lignes": [{"n": "CLAUSTRA AGADIR TC 28X28X9", "qte": 360, "ca": 1847}, {"n": "SAC 25KG ARDOISE BLEUE 30/60", "qte": 90, "ca": 563}]}, {"ref": "CM-2025-845", "date": "06/10/2025", "montant": 5380, "statut": "Livrée", "lignes": [{"n": "SAC 25KG MARBRE ROULE BLANC 15/25 NATERIAL", "qte": 384, "ca": 3141}, {"n": "BRIQUE REFRACT 5X11X22 ROUGE", "qte": 900, "ca": 1714}, {"n": "PRELINTEAU 20X100 EP 6", "qte": 20, "ca": 475}]}, {"ref": "CM-2025-799", "date": "15/08/2025", "montant": 1620, "statut": "Livrée", "lignes": [{"n": "PAS JAPONAIS CERAMIQUE 42X36X2 PIERRE", "qte": 144, "ca": 1055}, {"n": "BORDURE SCHISTE ARDOISIER 50X8X10", "qte": 120, "ca": 565}]}], "tracker": [{"ref": "CM-2026-114", "label": "Réassort maçonnerie & aménagement extérieur", "stepIndex": 2, "eta": null, "delivered": null}, {"ref": "CM-2026-107", "label": "Bordures & dallage — Perpignan Sud", "stepIndex": 4, "eta": "25/09/2026", "delivered": null}, {"ref": "CM-2026-098", "label": "Sacs granulats décoratifs", "stepIndex": 5, "eta": null, "delivered": "28/08/2026"}, {"ref": "CM-2026-119", "label": "Dallage terrasse — Perpignan Ouest", "stepIndex": 1, "eta": null, "delivered": null, "blocked": true, "badgeText": "Non conforme", "reason": "Non conforme — Franco non atteint"}], "activeOrders": [{"ref": "CM-2026-114", "label": "Réassort maçonnerie & aménagement extérieur", "date": "21/09/2026", "badgeText": "En préparation", "badgeType": "prep", "montant": 3205, "qte": 728, "lignes": [{"n": "BOISSEAU 20X20 H33 TC", "qte": 24, "ca": 339, "statut": "ok"}, {"n": "BOISSEAU 25X25 H33 TC", "qte": 18, "ca": 409, "statut": "rupture"}, {"n": "BORDURE DROITE PAVE SEINE GRIS 50X11X7.5", "qte": 112, "ca": 288, "statut": "ok"}, {"n": "BRIQUE CLOISON 2 ALV 7X20X38.5", "qte": 288, "ca": 438, "statut": "ok"}, {"n": "CLAUSTRA AGADIR TC 28X28X9", "qte": 120, "ca": 644, "statut": "partiel"}, {"n": "MANULINTEAU 20X20X280", "qte": 1, "ca": 84, "statut": "ok"}, {"n": "PILIER A ENDUIRE 37X37 H20 GRIS", "qte": 54, "ca": 208, "statut": "ok"}, {"n": "PROFILES H ECOPIC PAQUET DE 10", "qte": 5, "ca": 76, "statut": "ok"}, {"n": "SAC 25KG MARBRE BLANC 8/16 NATERIAL", "qte": 50, "ca": 300, "statut": "ok"}, {"n": "SAC 25KG MARBRE ROULE BLANC 15/25 NATERIAL", "qte": 48, "ca": 396, "statut": "ok"}, {"n": "TUTEUR REPLACE 2,5X2,5X190 (100% RECYCLE)", "qte": 8, "ca": 23, "statut": "ok"}]}, {"ref": "CM-2026-107", "label": "Bordures & dallage — Perpignan Sud", "date": "15/09/2026", "badgeText": "En cours de livraison", "badgeType": "exp", "montant": 2815, "qte": 612, "lignes": [{"n": "BORDURE DROITE PAVE SEINE TON PIERRE 50X11X7.5", "qte": 280, "ca": 762, "statut": "ok"}, {"n": "DALLE CEVENNES 49.5X49.5X2,2 CREME", "qte": 152, "ca": 704, "statut": "ok"}, {"n": "COUVRE MUR ARRONDI 50X28 PIERRE", "qte": 84, "ca": 645, "statut": "ok"}, {"n": "PAS JAPONAIS CERAMIQUE 42X36X2 PIERRE", "qte": 96, "ca": 704, "statut": "ok"}], "eta": "25/09/2026"}, {"ref": "CM-2026-119", "label": "Dallage terrasse — Perpignan Ouest", "date": "17/09/2026", "badgeText": "Non conforme", "badgeType": "attente", "montant": 2100, "qte": 556, "lignes": [{"n": "DALLE CEVENNES 49.5X49.5X2,2 CREME", "qte": 300, "ca": 1390, "statut": "ok"}, {"n": "BORDURE DROITE PAVE SEINE TON PIERRE 50X11X7.5", "qte": 200, "ca": 544, "statut": "ok"}, {"n": "NEZ DE MARCHE 20X28 ROUGE CAL", "qte": 56, "ca": 166, "statut": "ok"}], "blocked": true, "reason": "Non conforme — Franco non atteint"}]}</script>
+<script>
+(function(){
+  const DATA = JSON.parse(document.getElementById('portal-data').textContent);
+
+  function euro(v){ return v.toLocaleString('fr-FR') + ' €'; }
+  function nbr(v){ return v.toLocaleString('fr-FR'); }
+
+  // ---------- Navigation ----------
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('.section');
+  const pageTitle = document.getElementById('pageTitle');
+  const titles = {
+    dashboard:'Tableau de bord', commandes:'Commande en cours', historique:'Historique 2025 / 2026',
+    tops:'Suivi des ventes produits'
+  };
+  let currentSection = 'dashboard';
+  let previousSection = 'dashboard';
+  function goTo(target){
+    if(target !== currentSection){
+      previousSection = currentSection;
+      currentSection = target;
+    }
+    navItems.forEach(b=>b.classList.toggle('active', b.dataset.target===target));
+    sections.forEach(s=>s.classList.toggle('active', s.id===target));
+    pageTitle.textContent = titles[target] || 'Tableau de bord';
+    document.getElementById('sidebar').classList.remove('open');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  navItems.forEach(b=>b.addEventListener('click', ()=>goTo(b.dataset.target)));
+  document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click', ()=>goTo(b.dataset.goto)));
+  document.getElementById('menuToggle').addEventListener('click', ()=> document.getElementById('sidebar').classList.toggle('open'));
+  document.getElementById('backFromCommandes').addEventListener('click', ()=> goTo(previousSection));
+
+  // ---------- SAV modal ----------
+  const savOverlay = document.getElementById('savOverlay');
+  const cmdSelect = document.getElementById('cmdSelect');
+  const articleSelect = document.getElementById('articleSelect');
+
+  // La liste des commandes proposées = commande en cours + historique
+  const savOrders = DATA.orderHistory;
+
+  function populateArticles(ref){
+    const o = savOrders.find(x=>x.ref===ref);
+    articleSelect.innerHTML = o
+      ? o.lignes.map(l=>`<option>${l.n}</option>`).join('') + '<option>Autre article de cette commande</option>'
+      : '<option>—</option>';
+  }
+  cmdSelect.innerHTML = savOrders.map(o=>`<option value="${o.ref}">${o.ref} — ${o.date} — ${euro(o.montant)}</option>`).join('');
+  populateArticles(savOrders[0].ref);
+  cmdSelect.addEventListener('change', ()=> populateArticles(cmdSelect.value));
+
+  document.getElementById('openSavBtn').addEventListener('click', ()=> savOverlay.classList.add('open'));
+  document.getElementById('closeSav').addEventListener('click', ()=> savOverlay.classList.remove('open'));
+  document.getElementById('cancelSav').addEventListener('click', ()=> savOverlay.classList.remove('open'));
+  document.getElementById('submitSav').addEventListener('click', ()=>{
+    savOverlay.classList.remove('open');
+    showToast('✓ Litige transmis au service qualité et à votre commercial');
+  });
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 3200);
+  }
+
+  // ---------- Order detail modal (historique + tableau de bord) ----------
+  const odOverlay = document.getElementById('orderDetailOverlay');
+  function openOrderDetail(o){
+    document.getElementById('odRef').textContent = o.ref;
+    document.getElementById('odDate').textContent = o.date;
+    document.getElementById('odStatus').textContent = o.statut;
+    const ruptureLignes = (o.lignes || []).filter(l => l.statut === 'rupture' || l.statut === 'partiel');
+    document.getElementById('odBody').innerHTML = o.lignes.map(l=>{
+      const isRupture = l.statut === 'rupture' || l.statut === 'partiel';
+      const dispo = l.statut === 'rupture' ? '<span class="badge attente"><span class="dot"></span>Rupture</span>'
+        : l.statut === 'partiel' ? '<span class="badge attente"><span class="dot"></span>Rupture partielle</span>'
+        : (l.statut ? '<span class="badge livree"><span class="dot"></span>Disponible</span>' : '');
+      return `<tr${isRupture ? ' style="background:var(--red-light);"' : ''}>
+        <td>${l.n}</td><td class="num">${nbr(l.qte)}</td><td class="num">${euro(l.ca)}</td><td>${dispo}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('odQty').textContent = nbr(o.lignes.reduce((s,l)=>s+l.qte,0));
+    document.getElementById('odTotal').textContent = euro(o.montant);
+    const noteEl = document.getElementById('odRuptureNote');
+    if(ruptureLignes.length > 0){
+      const liste = ruptureLignes.map(l=>l.n).join(', ');
+      noteEl.innerHTML = `<div class="tracker-alert" style="margin-top:0;margin-bottom:16px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/><path d="M10.3 3.9 2.6 18a1.8 1.8 0 0 0 1.6 2.6h15.6a1.8 1.8 0 0 0 1.6-2.6L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>
+        <span><b>Vous recevrez cette commande sans ${ruptureLignes.length} article${ruptureLignes.length>1?'s':''} :</b> ${liste}. Ces références sont actuellement en rupture — vous serez recontacté dès leur réapprovisionnement.</span>
+      </div>`;
+    } else {
+      noteEl.innerHTML = '';
+    }
+    odOverlay.classList.add('open');
+  }
+  document.getElementById('closeOd').addEventListener('click', ()=> odOverlay.classList.remove('open'));
+  document.getElementById('closeOd2').addEventListener('click', ()=> odOverlay.classList.remove('open'));
+
+  // ---------- Aide ----------
+  const helpOverlay = document.getElementById('helpOverlay');
+  document.getElementById('openHelpBtn').addEventListener('click', ()=> helpOverlay.classList.add('open'));
+  document.getElementById('closeHelp').addEventListener('click', ()=> helpOverlay.classList.remove('open'));
+  document.getElementById('closeHelp2').addEventListener('click', ()=> helpOverlay.classList.remove('open'));
+
+  // ---------- Paramètres / invitations ----------
+  const settingsOverlay = document.getElementById('settingsOverlay');
+  const inviteList = document.getElementById('inviteList');
+  let collaborators = [
+    {email:'m.dupuis@leroymerlin.fr', role:'Administrateur — peut aussi inviter d\'autres personnes', statut:'actif', initials:'MD'},
+  ];
+  function renderInvites(){
+    inviteList.innerHTML = collaborators.map(c=>`
+      <div class="invite-row">
+        <div class="av">${c.initials}</div>
+        <div class="info"><div class="em">${c.email}</div><div class="rl">${c.role}</div></div>
+        <span class="st ${c.statut==='actif'?'actif':'attente'}">${c.statut==='actif'?'Actif':'Invitation envoyée'}</span>
+      </div>`).join('');
+  }
+  renderInvites();
+
+  document.getElementById('openSettingsBtn').addEventListener('click', ()=> settingsOverlay.classList.add('open'));
+  document.getElementById('closeSettings').addEventListener('click', ()=> settingsOverlay.classList.remove('open'));
+  document.getElementById('closeSettings2').addEventListener('click', ()=> settingsOverlay.classList.remove('open'));
+  document.getElementById('submitInvite').addEventListener('click', ()=>{
+    const email = document.getElementById('inviteEmail').value.trim();
+    const role = document.getElementById('inviteRole').value;
+    if(!email || !email.includes('@')){
+      showToast('⚠ Merci de saisir une adresse email valide');
+      return;
+    }
+    const initials = email.slice(0,2).toUpperCase();
+    collaborators.push({email, role, statut:'attente', initials});
+    renderInvites();
+    document.getElementById('inviteEmail').value = '';
+    showToast('✓ Invitation envoyée à ' + email);
+  });
+
+  // ---------- Question sur une commande ----------
+  const qOverlay = document.getElementById('qOverlay');
+  document.getElementById('closeQ').addEventListener('click', ()=> qOverlay.classList.remove('open'));
+  document.getElementById('cancelQ').addEventListener('click', ()=> qOverlay.classList.remove('open'));
+  document.getElementById('submitQ').addEventListener('click', ()=>{
+    qOverlay.classList.remove('open');
+    document.getElementById('qText').value = '';
+    showToast('✓ Question envoyée au service commande');
+  });
+  // Délégation d'événement : fonctionne même pour les lignes générées dynamiquement
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-question]');
+    if(!btn) return;
+    document.getElementById('qOrderRef').textContent = DATA.orderHistory[0].ref;
+    document.getElementById('qArticleRef').textContent = btn.dataset.question;
+    qOverlay.classList.add('open');
+  });
+
+
+  // ---------- KPIs ----------
+  document.getElementById('kpiCa26').textContent = euro(DATA.totals.ca26);
+  document.getElementById('kpiCaDelta').textContent = '+' + DATA.totals.evol + '% vs 2025';
+  document.getElementById('kpiOrder').textContent = euro(DATA.totals.orderCa);
+  document.getElementById('kpiOrderSub').textContent = DATA.totals.orderRefs + ' réf. · ' + nbr(DATA.totals.orderQty) + ' unités';
+  document.getElementById('kpiActive').textContent = DATA.totals.activeOrders;
+  document.getElementById('kpiTotalRealised').textContent = DATA.totals.totalRealised + ' commandes réalisées au total';
+
+  document.getElementById('statCa25').textContent = euro(DATA.totals.ca25);
+  document.getElementById('statCa26').textContent = euro(DATA.totals.ca26);
+  document.getElementById('statArrow').textContent = '+' + euro(DATA.totals.ecart) + ' (+' + DATA.totals.evol + '%)';
+  document.getElementById('statQ26').textContent = nbr(DATA.totals.q26);
+
+  // ---------- Commande en cours : statuts de disponibilité ----------
+  const ruptureLines = DATA.order.filter(o => o.statut !== 'ok');
+  const nbRupture = ruptureLines.length;
+
+  function statutBadge(statut){
+    if(statut === 'rupture') return '<span class="badge attente"><span class="dot"></span>Rupture</span>';
+    if(statut === 'partiel') return '<span class="badge attente"><span class="dot"></span>Rupture partielle</span>';
+    return '<span class="badge livree"><span class="dot"></span>Disponible</span>';
+  }
+
+  // KPI "Ruptures sur la commande en cours"
+  const kpiRuptureEl = document.getElementById('kpiRupture');
+  const kpiRuptureBadge = document.getElementById('kpiRuptureBadge');
+  const kpiRuptureIcon = document.getElementById('kpiRuptureIcon');
+  if(nbRupture === 0){
+    kpiRuptureEl.textContent = '0';
+    kpiRuptureBadge.textContent = 'Commande complète';
+    kpiRuptureBadge.className = 'delta up';
+    kpiRuptureIcon.style.background = 'var(--green)';
+  } else {
+    kpiRuptureEl.textContent = nbRupture + ' / ' + DATA.order.length;
+    kpiRuptureBadge.textContent = 'Commande incomplète';
+    kpiRuptureBadge.className = 'delta down';
+    kpiRuptureIcon.style.background = 'var(--red)';
+    kpiRuptureIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/><path d="M10.3 3.9 2.6 18a1.8 1.8 0 0 0 1.6 2.6h15.6a1.8 1.8 0 0 0 1.6-2.6L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>';
+  }
+
+  // Order status banner (commandes page)
+  const banner = document.getElementById('orderStatusBanner');
+  const bannerIcon = document.getElementById('orderStatusIcon');
+  const bannerTitle = document.getElementById('orderStatusTitle');
+  const bannerSub = document.getElementById('orderStatusSub');
+  if(nbRupture === 0){
+    banner.style.background = 'var(--green-light)'; banner.style.border = '1px solid #CFE6BC';
+    bannerIcon.style.background = 'var(--green)';
+    bannerTitle.textContent = 'Commande complète';
+    bannerSub.textContent = 'Toutes les références sont disponibles — aucune rupture détectée';
+  } else {
+    banner.style.background = 'var(--red-light)'; banner.style.border = '1px solid #F0C7C0';
+    bannerIcon.style.background = 'var(--red)';
+    bannerIcon.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/><path d="M10.3 3.9 2.6 18a1.8 1.8 0 0 0 1.6 2.6h15.6a1.8 1.8 0 0 0 1.6-2.6L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>';
+    bannerTitle.textContent = 'Commande incomplète';
+    bannerSub.textContent = nbRupture + ' référence(s) en rupture ou rupture partielle sur ' + DATA.order.length;
+  }
+
+  document.getElementById('orderFullBody').innerHTML =
+    DATA.order.map(o=>`<tr><td>${o.n}</td><td class="num">${nbr(o.qte)}</td><td class="num">${euro(o.ca)}</td><td>${statutBadge(o.statut)}</td><td><button class="link-btn" data-question="${o.n}">Question</button></td></tr>`).join('')
+    + `<tr class="total-row"><td>Total commande</td><td class="num">${nbr(DATA.totals.orderQty)}</td><td class="num">${euro(DATA.totals.orderCa)}</td><td></td><td></td></tr>`;
+  document.getElementById('orderMeta').textContent = DATA.totals.orderRefs + ' références · ' + nbr(DATA.totals.orderQty) + ' unités · ' + euro(DATA.totals.orderCa);
+
+  // ---------- Commandes actives (tableau de bord, très visuel) ----------
+  function articleChip(l){
+    const isRupture = l.statut === 'rupture' || l.statut === 'partiel';
+    const dotClass = l.statut === 'rupture' ? 'rupture' : (l.statut === 'partiel' ? 'partiel' : 'ok');
+    return `<span class="article-chip ${isRupture?'is-rupture':''}" title="${l.n}">
+      <span class="dot ${dotClass}"></span>
+      <span class="nm">${l.n}</span>
+      <span class="qt">× ${nbr(l.qte)}</span>
+    </span>`;
+  }
+  function renderActiveOrders(){
+    const el = document.getElementById('activeOrdersList');
+    el.innerHTML = DATA.activeOrders.map(o=>{
+      const chips = o.lignes.map(articleChip).join('');
+      const etaTxt = o.eta ? ` · Livraison prévue le ${o.eta}` : '';
+      const alertHtml = o.blocked ? `<div class="tracker-alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/><path d="M10.3 3.9 2.6 18a1.8 1.8 0 0 0 1.6 2.6h15.6a1.8 1.8 0 0 0 1.6-2.6L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>
+          <span><b>${o.reason || 'Non conforme'}.</b> Vous devez compléter la commande pour la débloquer.</span>
+        </div>` : '';
+      return `<div class="active-order-card">
+        <div class="aoc-head">
+          <div><span class="ref">${o.ref}</span> <span class="badge ${o.badgeType}"><span class="dot"></span>${o.badgeText}</span></div>
+          <div class="aoc-amount">${euro(o.montant)}</div>
+        </div>
+        <div class="aoc-meta">${o.label} — ${o.lignes.length} références · ${nbr(o.qte)} unités${etaTxt}</div>
+        <div class="chip-grid">${chips}</div>
+        ${alertHtml}
+        <button class="link-btn" data-order-ref="${o.ref}">Voir le détail complet →</button>
+      </div>`;
+    }).join('');
+  }
+  renderActiveOrders();
+  document.getElementById('activeOrdersList').addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-order-ref]');
+    if(!btn) return;
+    if(btn.dataset.orderRef === 'CM-2026-114'){
+      goTo('commandes');
+    } else {
+      const o = DATA.activeOrders.find(x=>x.ref===btn.dataset.orderRef);
+      if(o) openOrderDetail({ref:o.ref, date:o.date, statut:o.badgeText, lignes:o.lignes, montant:o.montant});
+    }
+  });
+
+  // ---------- Suivi des commandes en cours (tracker) ----------
+  const STEPS = ['Reçue','Non Conforme','Préparation','Expédition','Livraison'];
+  function renderTracker(containerId, orders){
+    const el = document.getElementById(containerId);
+    if(!el) return;
+    el.innerHTML = orders.map(o=>{
+      const stepsHtml = STEPS.map((lbl,i)=>{
+        let cls = '';
+        if(o.blocked && i === o.stepIndex) cls = 'blocked';
+        else if(i < o.stepIndex) cls = 'done';
+        else if(i === o.stepIndex) cls = 'current';
+        const icon = (i < o.stepIndex) ? '✓' : (i+1);
+        return `<div class="step ${cls}"><div class="line"></div><div class="circle">${icon}</div><div class="lbl">${lbl}</div></div>`;
+      }).join('');
+      let badgeHtml = '';
+      if(o.blocked){
+        badgeHtml = `<span class="tracker-eta" style="background:var(--red-light);color:var(--red);">${o.badgeText || 'Non conforme'}</span>`;
+      } else if(o.delivered){
+        badgeHtml = `<span class="tracker-eta" style="background:var(--green-light);color:var(--green);">Livrée le ${o.delivered}</span>`;
+      } else if(o.eta){
+        badgeHtml = `<span class="tracker-eta">Livraison prévue le ${o.eta}</span>`;
+      }
+      const alertHtml = o.blocked ? `<div class="tracker-alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/><path d="M10.3 3.9 2.6 18a1.8 1.8 0 0 0 1.6 2.6h15.6a1.8 1.8 0 0 0 1.6-2.6L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>
+          <span><b>${o.reason || 'Non conforme'}.</b> Vous devez compléter la commande pour la débloquer.</span>
+        </div>` : '';
+      return `<div class="tracker-card">
+        <div class="tracker-top">
+          <div><span class="ref">${o.ref}</span> <span class="meta">— ${o.label}</span></div>
+          ${badgeHtml}
+        </div>
+        <div class="stepper">${stepsHtml}</div>
+        ${alertHtml}
+      </div>`;
+    }).join('');
+  }
+  renderTracker('trackerList', DATA.tracker);
+
+  // Dashboard: disponibilité de la commande en cours
+  document.getElementById('orderAvailHint').textContent = nbRupture===0 ? 'Aucune rupture' : (nbRupture + ' référence(s) concernée(s)');
+  if(nbRupture === 0){
+    document.getElementById('orderAvailability').innerHTML =
+      `<div class="rupture" style="background:var(--green-light);border-color:#CFE6BC;">
+        <div class="swatch" style="background:var(--green);"></div>
+        <div class="info"><b>Commande complète</b><span>Toutes les références de votre commande en cours sont disponibles</span></div>
+      </div>`;
+  } else {
+    document.getElementById('orderAvailability').innerHTML = ruptureLines.map(o=>`
+      <div class="rupture">
+        <div class="swatch"></div>
+        <div class="info"><b>${o.n}</b><span>${o.statut==='rupture' ? 'En rupture — en attente de réapprovisionnement' : 'Rupture partielle — quantité livrée réduite'}</span></div>
+        <div class="when">${nbr(o.qte)} unités</div>
+      </div>`).join('');
+  }
+
+  // ---------- Historique des commandes (exemple) ----------
+  function orderHistoryCard(o){
+    let statutBadgeHist;
+    if(o.statut === 'En cours') statutBadgeHist = '<span class="badge prep"><span class="dot"></span>En cours</span>';
+    else if(o.statut === 'Non conforme') statutBadgeHist = '<span class="badge attente"><span class="dot"></span>Non conforme</span>';
+    else statutBadgeHist = '<span class="badge livree"><span class="dot"></span>Livrée</span>';
+    const nbRuptureLignes = (o.lignes || []).filter(l => l.statut === 'rupture' || l.statut === 'partiel').length;
+    const ruptureNote = nbRuptureLignes > 0
+      ? `<div style="font-size:11px;color:var(--red);font-weight:600;margin-top:4px;">⚠ Sans ${nbRuptureLignes} article${nbRuptureLignes>1?'s':''} (rupture)</div>`
+      : '';
+    return `<tr class="order-hist-row" data-ref="${o.ref}" style="cursor:pointer;">
+      <td>${o.date}</td><td><b>${o.ref}</b></td><td class="num">${euro(o.montant)}</td>
+      <td>${statutBadgeHist}${ruptureNote}</td><td><button class="link-btn">Voir le détail →</button></td>
+    </tr>`;
+  }
+  document.getElementById('orderHistoryBody').innerHTML = DATA.orderHistory.map(orderHistoryCard).join('');
+  document.querySelectorAll('.order-hist-row').forEach(tr=>{
+    tr.addEventListener('click', ()=>{
+      const o = DATA.orderHistory.find(x=>x.ref === tr.dataset.ref);
+      if(o) openOrderDetail(o);
+    });
+  });
+
+  // ---------- Full products table ----------
+  let sortKey = 'ca26', sortDir = -1;
+  let filterText = '';
+
+  function renderProducts(){
+    let rows = DATA.products.filter(p => p.n.toLowerCase().includes(filterText));
+    rows = rows.slice().sort((a,b)=>{
+      let av = a[sortKey], bv = b[sortKey];
+      if(sortKey==='n'){ av = a.n; bv = b.n; return sortDir * av.localeCompare(bv); }
+      if(av===null) av = -Infinity;
+      if(bv===null) bv = -Infinity;
+      return sortDir * (av - bv);
+    });
+    document.getElementById('productsBody').innerHTML = rows.map(p=>{
+      const evolTxt = (p.evol===null) ? '<span class="badge new">Nouveau</span>' :
+        `<span class="${p.evol>=0?'evol-pos':'evol-neg'}">${p.evol>=0?'+':''}${p.evol}%</span>`;
+      return `<tr>
+        <td>${p.n}</td>
+        <td class="num">${nbr(p.q25)}</td>
+        <td class="num">${nbr(p.q26)}</td>
+        <td class="num">${euro(p.ca25)}</td>
+        <td class="num">${euro(p.ca26)}</td>
+        <td class="num ${p.ecart>=0?'evol-pos':'evol-neg'}">${p.ecart>=0?'+':''}${euro(p.ecart)}</td>
+        <td class="num">${evolTxt}</td>
+      </tr>`;
+    }).join('');
+  }
+  renderProducts();
+
+  document.getElementById('productsTotalRow').innerHTML =
+    `<td>Total général (132 réf.)</td><td class="num">${nbr(DATA.totals.q25)}</td><td class="num">${nbr(DATA.totals.q26)}</td>
+     <td class="num">${euro(DATA.totals.ca25)}</td><td class="num">${euro(DATA.totals.ca26)}</td>
+     <td class="num evol-pos">+${euro(DATA.totals.ecart)}</td><td class="num evol-pos">+${DATA.totals.evol}%</td>`;
+
+  document.querySelectorAll('th[data-sort]').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      const key = th.dataset.sort;
+      if(sortKey === key){ sortDir *= -1; } else { sortKey = key; sortDir = -1; }
+      document.querySelectorAll('th[data-sort] .arrow').forEach(a=>a.textContent='');
+      th.querySelector('.arrow').textContent = sortDir===-1 ? '▼' : '▲';
+      renderProducts();
+    });
+  });
+  document.getElementById('searchInput').addEventListener('input', (e)=>{
+    filterText = e.target.value.toLowerCase();
+    renderProducts();
+  });
+
+})();
+</script>
+</body>
+</html>
+"""
+

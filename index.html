@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Portail applicatif — Chamorin & Penez Herman</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23473d48'/><text x='50' y='68' font-size='56' text-anchor='middle' fill='%23e8892a' font-family='Arial' font-weight='700'>C</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/auth.js"></script>
+  <script src="assets/apps.js"></script>
+</head>
+<body>
+
+<!-- ==================== CONNEXION ==================== -->
+<main id="login" class="login" hidden>
+  <section class="login-side">
+    <div class="logos">
+      <div class="logo-plate"><img src="assets/chamorin.jpg" alt="Chamorin, Déco Jardins & Terrasses"></div>
+      <div class="logo-plate dark"><img src="assets/penez-herman.jpg" alt="Penez Herman"></div>
+    </div>
+    <div style="position:relative;z-index:1">
+      <h1>Nos outils métier, réunis au même endroit</h1>
+      <p>Portail client, CRM commercial et suivi de la migration Divalto : un seul accès pour les trois applications.</p>
+    </div>
+    <div class="login-apps" id="loginApps"></div>
+  </section>
+
+  <section class="login-form-wrap">
+    <form class="login-form" id="loginForm" novalidate>
+      <h2>Connexion</h2>
+      <p class="hint">Saisissez le code d'accès fourni par l'équipe Data.</p>
+      <label for="code">Code d'accès</label>
+      <input class="code-input" id="code" name="code" type="password" autocomplete="current-password" required autofocus>
+      <p class="error" id="error" role="alert"></p>
+      <button class="btn btn-primary" type="submit" id="submitBtn">Se connecter</button>
+    </form>
+  </section>
+</main>
+
+<!-- ==================== ACCUEIL ==================== -->
+<div id="home" hidden>
+  <header class="topbar">
+    <div class="logos">
+      <div class="logo-plate"><img src="assets/chamorin.jpg" alt="Chamorin"></div>
+      <div class="logo-plate dark plate-ph"><img src="assets/penez-herman.jpg" alt="Penez Herman"></div>
+    </div>
+    <button class="btn btn-ghost" id="logoutBtn" type="button">Se déconnecter</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="kicker">Direction Data & Outils commerciaux</p>
+          <h1>Trois applications, une seule porte d'entrée</h1>
+          <p class="lead">Nous avons construit trois outils pour nos clients, nos commerciaux et nos équipes internes. Ce portail les rassemble derrière un accès unique, sans installation.</p>
+        </div>
+        <nav class="stack" id="heroTiles" aria-label="Ouvrir une application"></nav>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-inner">
+        <h2>Ce que fait chaque application</h2>
+        <p class="intro">Chacune répond à un besoin précis et s'ouvre directement dans le portail. Vous pouvez passer de l'une à l'autre depuis la barre du haut.</p>
+        <div class="app-list" id="appList"></div>
+      </div>
+    </section>
+
+    <section class="section why">
+      <div class="section-inner">
+        <h2>Pourquoi un portail commun</h2>
+        <div class="why-grid">
+          <div>
+            <h3>Un accès unique</h3>
+            <p>Un seul lien et un seul code pour ouvrir les trois outils, au lieu de fichiers envoyés par mail.</p>
+          </div>
+          <div>
+            <h3>Toujours la dernière version</h3>
+            <p>Les applications sont mises à jour à un seul endroit. Tout le monde travaille sur la même base.</p>
+          </div>
+          <div>
+            <h3>Rien à installer</h3>
+            <p>Tout fonctionne dans le navigateur, sur ordinateur comme sur tablette, en magasin ou au bureau.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="logos">
+        <div class="logo-plate"><img src="assets/chamorin.jpg" alt="Chamorin"></div>
+        <div class="logo-plate dark"><img src="assets/penez-herman.jpg" alt="Penez Herman"></div>
+      </div>
+      <p>Chamorin & Penez Herman, outils internes</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  const apps = window.PORTAIL_APPS;
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const openUrl = a => "app.html?app=" + encodeURIComponent(a.id);
+
+  // Icônes sur l'écran de connexion
+  $("loginApps").innerHTML = apps.map(a =>
+    `<span style="background:${a.color}" title="${esc(a.name)}">${a.icon}</span>`).join("");
+
+  // Tuiles du hero
+  $("heroTiles").innerHTML = apps.map(a => `
+    <a class="tile" href="${openUrl(a)}" style="background:${a.color}">
+      ${a.icon}
+      <span><strong>${esc(a.name)}</strong><small>${esc(a.audience)}</small></span>
+    </a>`).join("");
+
+  // Liste détaillée
+  $("appList").innerHTML = apps.map(a => `
+    <article class="app-row">
+      <div class="app-icon" style="background:${a.color}">${a.icon}</div>
+      <div>
+        <h3>${esc(a.name)}</h3>
+        <p class="aud">${esc(a.audience)}</p>
+        <p class="sum">${esc(a.summary)}</p>
+        <ul class="chips">${a.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      </div>
+      <a class="btn btn-open" href="${openUrl(a)}">Ouvrir</a>
+    </article>`).join("");
+
+  function show() {
+    const logged = PortailAuth.isLogged();
+    $("login").hidden = logged;
+    $("home").hidden = !logged;
+    if (!logged) setTimeout(() => $("code").focus(), 0);
+  }
+
+  $("loginForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const input = $("code"), err = $("error"), btn = $("submitBtn");
+    err.textContent = "";
+    input.removeAttribute("aria-invalid");
+    if (!input.value.trim()) { err.textContent = "Saisissez le code d'accès."; input.focus(); return; }
+    btn.disabled = true;
+    try {
+      const ok = await PortailAuth.login(input.value);
+      if (ok) {
+        const next = new URLSearchParams(location.search).get("next");
+        const target = apps.find(a => a.id === next);
+        if (target) { location.href = openUrl(target); return; }
+        input.value = "";
+        show();
+        window.scrollTo(0, 0);
+      } else {
+        err.textContent = "Code incorrect. Vérifiez la saisie et réessayez.";
+        input.setAttribute("aria-invalid", "true");
+        input.classList.remove("shake"); void input.offsetWidth; input.classList.add("shake");
+        input.select();
+      }
+    } catch (ex) {
+      err.textContent = ex.message;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  $("logoutBtn").addEventListener("click", () => { PortailAuth.logout(); show(); });
+
+  show();
+})();
+</script>
+</body>
+</html>
