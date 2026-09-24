@@ -232,47 +232,48 @@ html.full, html.full body { height: 100%; }
 .back img { height: 26px; }
 
 /* ---------- Section applications avec photo de fond ---------- */
+/* La photo couvre toute la section, du titre jusqu'en bas de la liste */
+.apps-section {
+  position: relative;
+  isolation: isolate;
+  background: #3b4a30 url("fond-jardin.jpg") 42% 30% / cover no-repeat;
+}
+.apps-section::before {
+  /* voile : plus sombre à gauche sous le titre, léger ailleurs */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(45,37,48,.78) 0%, rgba(45,37,48,.45) 32%, rgba(45,37,48,.08) 60%),
+    linear-gradient(180deg, rgba(45,37,48,0) 55%, rgba(45,37,48,.35) 100%);
+}
 .apps-banner {
-  position: relative;
-  overflow: hidden;
-  background: var(--plum);
   color: var(--white);
-  min-height: clamp(400px, 40vw, 600px);
+  min-height: clamp(340px, 32vw, 500px);
   display: flex; align-items: center;
-  padding: clamp(48px, 6vw, 80px) clamp(18px, 4vw, 48px) clamp(130px, 13vw, 180px);
+  padding: clamp(48px, 6vw, 80px) clamp(18px, 4vw, 48px) clamp(40px, 5vw, 64px);
 }
-.apps-banner::before {
-  /* photo calée à droite, fondue progressivement dans le prune vers la gauche */
-  content: "";
-  position: absolute; top: 0; right: 0; bottom: 0;
-  width: min(68%, 1250px);
-  background: url("fond-jardin.jpg") 40% 25% / cover no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.6) 18%, #000 38%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.6) 18%, #000 38%);
-}
-.apps-banner .section-inner { position: relative; }
 .apps-banner .section-inner { width: 100%; }
-.apps-banner h2 { color: var(--white); font-size: clamp(32px, 4vw, 52px); max-width: 14ch; }
-.apps-banner .intro { color: #e7e0e9; max-width: 40ch; }
-.apps-body { padding: 0 clamp(18px, 4vw, 48px) clamp(56px, 7vw, 96px); }
+.apps-banner h2 { color: var(--white); font-size: clamp(32px, 4vw, 52px); max-width: 14ch; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
+.apps-banner .intro { color: #f1ecf2; max-width: 40ch; text-shadow: 0 1px 12px rgba(0,0,0,.45); }
+.apps-body { padding: 0 clamp(18px, 4vw, 48px) clamp(64px, 8vw, 110px); }
 .apps-body .app-list {
-  margin-top: calc(-1 * clamp(80px, 9vw, 120px));
-  position: relative;
-  background: var(--white);
+  margin-top: 0;
+  background: rgba(255,255,255,.74);
+  -webkit-backdrop-filter: blur(5px) saturate(1.1);
+  backdrop-filter: blur(5px) saturate(1.1);
+  border: 1px solid rgba(255,255,255,.6);
   border-radius: 24px;
   padding: 6px clamp(18px, 3vw, 36px);
-  box-shadow: 0 24px 60px rgba(45,37,48,.18);
+  box-shadow: 0 24px 60px rgba(20,25,15,.3);
 }
 .apps-body .app-row:first-child { border-top: 0; }
 .apps-body .app-row:last-child { border-bottom: 0; }
+.apps-body .app-row { border-color: rgba(71,61,72,.14); }
 @media (max-width: 880px) {
-  .apps-banner { align-items: flex-end; min-height: 0; padding-top: 270px; }
-  .apps-banner::before {
-    width: 100%; bottom: auto; height: 300px;
-    background-position: 30% 25%;
-    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+  .apps-section { background-position: 32% 20%; }
+  .apps-section::before {
+    background: linear-gradient(180deg, rgba(45,37,48,.15) 0%, rgba(45,37,48,.6) 30%, rgba(45,37,48,.35) 100%);
   }
+  .apps-banner { min-height: 0; padding-top: 220px; align-items: flex-end; }
 }
 
 /* ---------- Boutons Explication / Ouvrir ---------- */
