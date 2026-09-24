@@ -34,7 +34,7 @@ window.PORTAIL_APPS = [
   },
   {
     id: "crm",
-    file: "crm.html?v=7",
+    file: "crm.html?v=12",
     name: "CRM commercial",
     audience: "Pour l'équipe commerciale",
     summary: "Un exemple de CRM pour préparer et tracer les visites : agenda, comptes rendus, prises de commande, opportunités et fiche complète de chaque client.",
