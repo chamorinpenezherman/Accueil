@@ -62,7 +62,7 @@ window.PORTAIL_APPS = [
   },
   {
     id: "migration",
-    file: "migration.html?v=7",
+    file: "migration.html?v=13",
     name: "Suivi de la migration Divalto",
     audience: "Pour les équipes internes",
     summary: "Le suivi des ateliers de migration service par service : chronologie des sessions, participants, fiches de tests et points bloquants à lever.",

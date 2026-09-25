@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=11">
   <script src="auth.js?v=8"></script>
-  <script src="apps.js?v=12"></script>
+  <script src="apps.js?v=13"></script>
 </head>
 <body>
 
@@ -115,7 +115,7 @@
   const apps = window.PORTAIL_APPS;
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const openUrl = a => "app.html?app=" + encodeURIComponent(a.id) + "&v=7";
+  const openUrl = a => "app.html?app=" + encodeURIComponent(a.id) + "&v=13";
 
   // Icônes sur l'écran de connexion
   $("loginApps").innerHTML = apps.map(a =>

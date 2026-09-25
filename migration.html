@@ -104,8 +104,8 @@ header p.lead{font-size:1.1rem; color:var(--muted); max-width:62ch; margin:0}
 .inst .lbl b{display:block; font-size:.88rem}
 .inst .ic{width:26px; height:26px; border-radius:7px; display:grid; place-items:center; background:var(--ok-bg); color:var(--chamorin); flex:none}
 .inst .ic svg{width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.today{position:absolute; top:44px; bottom:78px; width:0; border-left:2px dashed var(--focus)}
-.today span{position:absolute; top:0; left:4px; font-size:.75rem; font-weight:600; color:var(--focus); white-space:nowrap; background:var(--surface); padding:0 3px}
+.today-line{position:absolute; top:44px; bottom:78px; width:0; border-left:2px dashed var(--focus)}
+.today-line span{position:absolute; top:0; left:4px; font-size:.75rem; font-weight:600; color:var(--focus); white-space:nowrap; background:var(--surface); padding:0 3px}
 .facts{display:flex; flex-wrap:wrap; gap:8px 28px; margin:26px 0 0; padding:0; list-style:none}
 .facts li{font-size:.95rem; color:var(--muted)}
 .facts b{display:block; font-size:1.6rem; color:var(--ink); font-weight:600; line-height:1.1}
@@ -494,7 +494,7 @@ const nextSession = upcoming[0] || null;
       <div class="ms start" style="left:${tL}%"><span class="flag">${flagStart}</span><span class="lbl"><b>Début des tests</b>ven. 25 sept.</span></div>
       <div class="ms end" style="left:${tR}%"><span class="flag">${flagEnd}</span><span class="lbl"><b>Fin des tests, S47</b>du lun. 16 au ven. 20 nov.</span></div>
       <div class="inst" style="left:${pct(toDate("2026-09-22",12))}%"><span class="dia"></span><span class="stem"></span><span class="lbl"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v11"/><path d="m7.5 9.5 4.5 4.5 4.5-4.5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span><span><b>Installation de la version Divalto SaaS</b>mardi 22 sept.</span></span></div>
-      ${inAxis ? `<div class="today" style="left:${pct(now)}%"><span>Aujourd'hui</span></div>` : ""}
+      ${inAxis ? `<div class="today-line" style="left:${pct(now)}%"><span>Aujourd'hui</span></div>` : ""}
     </div></div>`;
 })();
 

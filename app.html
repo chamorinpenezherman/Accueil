@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=11">
   <script src="auth.js?v=7"></script>
-  <script src="apps.js?v=12"></script>
+  <script src="apps.js?v=13"></script>
   <script>
     // Pas de session : retour à l'écran de connexion, puis retour ici après connexion
     (function () {
@@ -42,7 +42,7 @@
   document.getElementById("frame").title = current.name;
 
   document.getElementById("nav").innerHTML = apps.map(a => `
-    <a href="app.html?app=${encodeURIComponent(a.id)}&v=7" ${a.id === current.id ? 'aria-current="page"' : ""} title="${a.name}">
+    <a href="app.html?app=${encodeURIComponent(a.id)}&v=13" ${a.id === current.id ? 'aria-current="page"' : ""} title="${a.name}">
       ${a.icon}<span>${a.name}</span>
     </a>`).join("");
 
